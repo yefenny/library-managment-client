@@ -1,0 +1,227 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap');
+/*
+The CSS code gets to executed from top to bottom and left ro right
+Basic rules to write CSS
+- write GENERAL rules first (for all the paragraph tags in the website for example) and only after that write CSS for SPECIFIC tags (for example the paragraph tags inside the footer)
+- write the css styles to define for the parent (outside) container and THEN the children (inside containers) of that parent and THEN the children (inside containers) of the child above
+*/
+
+/* -------------------------------------
+CSS reset
+Is a short set of CSS rules that resets the styling of all HTML elements to a consistent baseline so the website will look the same on all browsers
+*/
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  /*The box-sizing property is used to tell the browser what the sizing properties (width and height) should include border-box.*/
+  box-sizing: border-box;
+  /*reset Chrome user agent styles*/
+  -webkit-margin-before: 0px;
+  -webkit-margin-after: 0px;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  -webkit-padding-before: 0px;
+  -webkit-padding-after: 0px;
+  -webkit-padding-start: 0px;
+  -webkit-padding-end: 0px;
+  /*reset Firefox user agent styles*/
+  -moz-margin-before: 0px;
+  -moz-margin-after: 0px;
+  -moz-margin-start: 0px;
+  -moz-margin-end: 0px;
+  -moz-padding-before: 0px;
+  -moz-padding-after: 0px;
+  -moz-padding-start: 0px;
+  -moz-padding-end: 0px;
+  /*reset Internet Explorer user agent styles*/
+  -ms-margin-before: 0px;
+  -ms-margin-after: 0px;
+  -ms-margin-start: 0px;
+  -ms-margin-end: 0px;
+  -ms-padding-before: 0px;
+  -ms-padding-after: 0px;
+  -ms-padding-start: 0px;
+  -ms-padding-end: 0px;
+  /*reset Opera user agent styles*/
+  -o-margin-before: 0px;
+  -o-margin-after: 0px;
+  -o-margin-start: 0px;
+  -o-margin-end: 0px;
+  -o-padding-before: 0px;
+  -o-padding-after: 0px;
+  -o-padding-start: 0px;
+  -o-padding-end: 0px;
+}
+
+body {
+  font-family: 'Oswald', sans-serif;
+}
+
+button {
+  font-family: 'Oswald', sans-serif;
+  padding: 5px;
+}
+header {
+  display: flex;
+  background-color: #54848c;
+  font-size: 600;
+  font-size: 24px;
+  color: #f5f5f5;
+  padding: 10px;
+  justify-content: space-between;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 100%;
+}
+nav {
+  align-self: flex-end;
+}
+nav a {
+  text-decoration: none;
+  margin: 10px;
+  color: #edb949;
+}
+
+nav a:hover {
+  color: #be943a;
+}
+
+.sign-up-container {
+  display: grid;
+  grid-template-columns: 60% 40%;
+  grid-template-rows: 1;
+  width: 100%;
+  height: 100vh;
+  min-height: 0;
+}
+
+.bg-library {
+  background: url('./bg-library.jpg') no-repeat;
+  background-size: 100% auto;
+  background-color: #84d2e5;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  color: #84d2e5;
+}
+.sign-up-form {
+  display: grid;
+  width: 100%;
+  background: #1c3b4d;
+  font-size: 26px;
+  color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 20%;
+}
+
+.sign-up-form h1 {
+  font-size: 38px;
+  align-self: center;
+  font-weight: 800;
+}
+.sign-up-form form {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin-top: 40px;
+}
+
+.sign-up-form form input {
+  margin: 5px;
+  border-radius: 5px;
+  background: #eaedef;
+}
+.sign-up-form form button {
+  color: #1c3b4d;
+  margin-top: 30px;
+  border-radius: 5px;
+  background: #95c1cb;
+  font-weight: 700;
+  padding: 10px;
+}
+.sign-up-form form button:hover {
+  background: #5f868e;
+}
+.sign-up-form .login-create {
+  font-size: 24px;
+  margin-top: 25px;
+}
+.sign-up-form .login-create a {
+  text-decoration: none;
+  color: #edb949;
+}
+.sign-up-form .login-create a:hover {
+  text-decoration: none;
+  color: #be943a;
+}
+
+@media only screen and (max-width: 960px) {
+  .sign-up-form {
+    font-size: 20px;
+  }
+  .sign-up-form h1 {
+    font-size: 28px;
+  }
+  .sign-up-form .login-create {
+    font-size: 18px;
+    margin-top: 25px;
+  }
+}
+
+@media only screen and (max-width: 706px) {
+  .sign-up-container {
+    display: grid;
+    grid-template-columns: 1;
+    grid-template-rows: 750px 1100px;
+  }
+  .sign-up-form {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+  }
+  .sign-up-form h1 {
+    font-size: 28px;
+  }
+  .sign-up-form .login-create {
+    font-size: 18px;
+    margin-top: 25px;
+  }
+  .bg-library {
+    background: url('./bg-library.jpg') no-repeat;
+    background-size: 100% auto;
+    background-color: #84d2e5;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    color: #84d2e5;
+  }
+}
+@media only screen and (max-width: 515px) {
+  header {
+    font-size: 22px;
+  }
+  .sign-up-container {
+    display: grid;
+    grid-template-columns: 1;
+    grid-template-rows: 600px 1100px;
+  }
+}
+@media only screen and (max-width: 450px) {
+  header {
+    font-size: 18px;
+  }
+  .sign-up-container {
+    display: grid;
+    grid-template-columns: 1;
+    grid-template-rows: 500px 1000px;
+  }
+  .sign-up-form {
+    font-size: 20px;
+  }
+}
