@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Oswald:wght@200;300;400;500;600;700&display=swap');
 /*
 The CSS code gets to executed from top to bottom and left ro right
 Basic rules to write CSS
@@ -68,9 +68,10 @@ header {
   display: flex;
   background-color: #54848c;
   font-size: 600;
-  font-size: 24px;
+  font-size: 20px;
   color: #f5f5f5;
-  padding: 10px;
+  padding: 15px;
+  padding-bottom: 20px;
   justify-content: space-between;
 }
 
@@ -158,7 +159,170 @@ nav a:hover {
   text-decoration: none;
   color: #be943a;
 }
+.books-container {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Lora', serif;
+  height: 100vh;
+  color: #f1f1f1;
+  font-size: 22px;
+  font-weight: 500;
+  border: 3px solid black; /* inner border */
+  box-shadow: 0px 0px 0px 15px black; /* outer 'border' */
+  outline: 12px solid white; /* fill */
+  margin-left: 14px;
+  margin-right: 14px;
+}
+.books-container header {
+  background-color: #1c3b4d;
+}
+.bg-books h2 {
+  color: #dbb156;
+  font-size: 64px;
+  font-weight: 700;
+  margin: 20px 60px;
+}
+.bg-books {
+  background: #1c3b4d;
+}
+.searchContainer {
+  /* background-color: #37808c; */
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-weight: 700;
+  padding: 10px 0 40px 60px;
+  border: 3px solid black; /* inner border */
+  box-shadow: 0px 0px 0px 15px black; /* outer 'border' */
+  outline: 12px solid #f1f1f1; /* fill */
+}
+.searchContainer input {
+  width: 36%;
+  margin-top: 10px;
+  background: #f1f1f1;
+  border: #f5f5f5;
+  padding: 10px 15px;
+  border-radius: 30px;
+}
+.books-list-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  padding: 150px 0 0 70px;
+}
+.book-item {
+  height: 200px;
+}
+.book-item h3 {
+  margin: 30px 0 85px 60px;
+  color: #e4e0ce;
+}
+.book-item .book-author {
+  font-size: 14px;
+  margin: 0 0 60px 60px;
+  padding-top: 30px;
+}
 
+.book,
+.book:before,
+.book:after {
+  box-sizing: inherit;
+}
+.book:before,
+.book:after {
+  content: '';
+  position: absolute;
+}
+.book {
+  color: #f1f1f1;
+  width: 180px;
+  height: 230px;
+  transform: translate(-50%, -50%);
+  /* top: 50%;
+  left: 50%; */
+  background: #ef6e67;
+  border-radius: 20px 16px 12px 32px;
+  border: 3px solid #404042;
+  background-image: linear-gradient(
+    to right,
+    #84d2e5 28px,
+    black 30px,
+    transparent 30px
+  );
+  box-shadow: 2px 6px 40px 0px #042538;
+  margin: 50px 80px;
+}
+.book:after {
+  height: 52px;
+  width: 170px;
+  bottom: 6px;
+  right: 0px;
+  background: white;
+  border-radius: 32px 4px 4px 32px;
+  box-shadow: inset 4px 6px 0px 0px #e4e0ce;
+  background-image: linear-gradient(
+    to bottom,
+    transparent 6px,
+    #e4e0ce 8px,
+    transparent 8px,
+    transparent 12px,
+    #e4e0ce 12px,
+    transparent 14px,
+    transparent 18px,
+    #e4e0ce 18px,
+    transparent 20px,
+    transparent 24px,
+    #e4e0ce 24px,
+    transparent 26px,
+    transparent 30px,
+    #e4e0ce 30px,
+    transparent 32px,
+    transparent 36px,
+    #e4e0ce 36px,
+    transparent 38px,
+    transparent 42px,
+    #e4e0ce 42px,
+    transparent 44px,
+    transparent 48px,
+    #e4e0ce 48px,
+    transparent 50px
+  );
+}
+.green-book {
+  background-color: #b3d685;
+  background-image: linear-gradient(
+    to right,
+    #93d141 48px,
+    #92d13f 50px,
+    transparent 50px
+  );
+}
+.orange-book {
+  background-color: #dbb156;
+  background-image: linear-gradient(
+    to right,
+    #e8ab27 48px,
+    #eba000 50px,
+    transparent 50px
+  );
+}
+.blue-book {
+  background-color: #84d2e5;
+  background-image: linear-gradient(
+    to right,
+    #49c4e3 48px,
+    #1bb9e0 50px,
+    transparent 50px
+  );
+}
+/* .book:before {
+  height: 20px;
+  width: 60px;
+  right: 40px;
+  top: 72px;
+  background: #d11f2f;
+  border-radius: 20px;
+  box-shadow: 0px 36px #d11f2f;
+} */
 @media only screen and (max-width: 960px) {
   .sign-up-form {
     font-size: 20px;

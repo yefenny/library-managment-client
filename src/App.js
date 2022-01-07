@@ -2,6 +2,7 @@ import './assets/style.css';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import SignUp from './Signup/SignUp';
 import LogIn from './Login/Login';
+import Books from './Books/Books';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route exact path='/'></Route>
           <Route path='/signup' element={<SignUp />} />
           <Route path='/login' element={<LogIn />} />
+          <Route path='/books' element={<Books />} />
         </Routes>
       </main>
     </Router>
