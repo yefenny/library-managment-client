@@ -16,7 +16,7 @@ function Books() {
           {' '}
           <h3>The book number 1</h3>
           <span className='book-author'>Name lastname</span>
-          <Link to='/'>Book number 1</Link>
+          {/* <Link to='/'>Book number 1</Link> */}
         </div>
         <div className='book book-item'>
           {' '}
