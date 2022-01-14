@@ -1,32 +1,92 @@
 import React, { useState } from 'react';
 import { withRouter, Link } from 'react-router-dom';
+import MemberService from '../Services/MemberService';
 function SignUp() {
   const [formData, setFormData] = useState({
     name: '',
     streetAddress: '',
     city: '',
-    state: '',
     zipcode: '',
     country: '',
     email: '',
-    phone: '',
+    phoneNumber: '',
     password: '',
-    repeatPassword: ''
+    repeatPassword: '',
+    error: ''
   });
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const {
+      name,
+      streetAddress,
+      city,
+      zipcode,
+      country,
+      email,
+      phoneNumber,
+      password,
+      repeatPassword
+    } = formData;
+    const required = {
+      name,
+      email,
+      password,
+      repeatPassword,
+      streetAddress,
+      city,
+      zipcode,
+      country,
+      phoneNumber
+    };
+    for (const [key, value] of Object.entries(required)) {
+      if (value.trim().length < 1) {
+        setFormData({ ...formData, error: `${key} is required` });
+        return;
+      }
+    }
+    if (password !== repeatPassword) {
+      setFormData({
+        ...formData,
+        error: 'password and repeatPassword should be the same'
+      });
+      return;
+    }
+    const newUser = {
+      name,
+      password,
+      email,
+      streetAddress,
+      city,
+      zipcode,
+      country,
+      phoneNumber
+    };
+    console.log(newUser);
+    MemberService.createMember(newUser)
+      .then((res) => {
+        console.log('hereee');
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  };
   return (
     <div className='sign-up-container '>
       <div className='bg-library'>Image by rawpixel.com</div>
       <div className='sign-up-form'>
         <h1>Create Account</h1>
-        <form>
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <div className='error'>{formData.error}</div>
           <label htmlFor='name'>Name:</label>
           <input
             type='text'
             id='name'
             name='name'
-            onChange={(e) => {
-              setFormData({ ...formData, name: e.target.value });
-            }}
+            required
+            onChange={handleChange}
             value={formData.name}
           />
           <label htmlFor='email'>Email:</label>
@@ -34,9 +94,8 @@ function SignUp() {
             type='text'
             id='email'
             name='email'
-            onChange={(e) => {
-              setFormData({ ...formData, email: e.target.value });
-            }}
+            required
+            onChange={handleChange}
             value={formData.email}
           />
           <label htmlFor='password'>Password:</label>
@@ -44,9 +103,8 @@ function SignUp() {
             type='text'
             id='password'
             name='password'
-            onChange={(e) => {
-              setFormData({ ...formData, password: e.target.value });
-            }}
+            required
+            onChange={handleChange}
             value={formData.password}
           />
           <label htmlFor='repeatPassword'>Repeat password:</label>
@@ -54,9 +112,8 @@ function SignUp() {
             type='text'
             id='repeatPassword'
             name='repeatPassword'
-            onChange={(e) => {
-              setFormData({ ...formData, repeatPassword: e.target.value });
-            }}
+            required
+            onChange={handleChange}
             value={formData.repeatPassword}
           />
           <label htmlFor='streetAddress'>Street address:</label>
@@ -64,9 +121,8 @@ function SignUp() {
             type='text'
             id='streetAddress'
             name='streetAddress'
-            onChange={(e) => {
-              setFormData({ ...formData, streetAddress: e.target.value });
-            }}
+            required
+            onChange={handleChange}
             value={formData.streetAddress}
           />
           <label htmlFor='city'>City:</label>
@@ -74,29 +130,18 @@ function SignUp() {
             type='text'
             id='city'
             name='city'
-            onChange={(e) => {
-              setFormData({ ...formData, city: e.target.value });
-            }}
+            required
+            onChange={handleChange}
             value={formData.city}
           />
-          <label htmlFor='state'>State:</label>
-          <input
-            type='text'
-            id='state'
-            name='state'
-            onChange={(e) => {
-              setFormData({ ...formData, state: e.target.value });
-            }}
-            value={formData.state}
-          />
+
           <label htmlFor='zipcode'>ZIP Code:</label>
           <input
             type='text'
             id='zipcode'
             name='zipcode'
-            onChange={(e) => {
-              setFormData({ ...formData, zipcode: e.target.value });
-            }}
+            required
+            onChange={handleChange}
             value={formData.zipcode}
           />
           <label htmlFor='country'>Country:</label>
@@ -104,20 +149,18 @@ function SignUp() {
             type='text'
             id='country'
             name='country'
-            onChange={(e) => {
-              setFormData({ ...formData, country: e.target.value });
-            }}
+            required
+            onChange={handleChange}
             value={formData.country}
           />
-          <label htmlFor='phone'>Phone:</label>
+          <label htmlFor='phoneNumber'>Phone Number:</label>
           <input
             type='text'
-            id='phone'
-            name='phone'
-            onChange={(e) => {
-              setFormData({ ...formData, phone: e.target.value });
-            }}
-            value={formData.phone}
+            id='phoneNumber'
+            name='phoneNumber'
+            required
+            onChange={handleChange}
+            value={formData.phoneNumber}
           />
           <button>Create</button>
           <span className='login-create'>

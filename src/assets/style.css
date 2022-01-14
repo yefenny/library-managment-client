@@ -159,6 +159,10 @@ nav a:hover {
   text-decoration: none;
   color: #be943a;
 }
+.sign-up-form .error {
+  color: red;
+  font-size: 18px;
+}
 .books-container {
   display: flex;
   flex-direction: row;
