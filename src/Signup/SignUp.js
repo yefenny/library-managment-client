@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { withRouter, Link } from 'react-router-dom';
+import AccountService from '../Services/AccountService';
 import MemberService from '../Services/MemberService';
 function SignUp() {
   const [formData, setFormData] = useState({
@@ -64,10 +65,10 @@ function SignUp() {
       country,
       phoneNumber
     };
-    console.log(newUser);
     MemberService.createMember(newUser)
       .then((res) => {
-        console.log('hereee');
+        AccountService.storeUser(res);
+        window.location = '/welcome';
       })
       .catch((res) => {
         console.log(res);
@@ -91,7 +92,7 @@ function SignUp() {
           />
           <label htmlFor='email'>Email:</label>
           <input
-            type='text'
+            type='email'
             id='email'
             name='email'
             required
@@ -100,7 +101,7 @@ function SignUp() {
           />
           <label htmlFor='password'>Password:</label>
           <input
-            type='text'
+            type='password'
             id='password'
             name='password'
             required
@@ -109,7 +110,7 @@ function SignUp() {
           />
           <label htmlFor='repeatPassword'>Repeat password:</label>
           <input
-            type='text'
+            type='password'
             id='repeatPassword'
             name='repeatPassword'
             required

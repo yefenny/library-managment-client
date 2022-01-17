@@ -132,6 +132,7 @@ nav a:hover {
 }
 
 .sign-up-form form input {
+  font-size: 20px;
   margin: 5px;
   border-radius: 5px;
   background: #eaedef;
@@ -162,6 +163,36 @@ nav a:hover {
 .sign-up-form .error {
   color: red;
   font-size: 18px;
+}
+.sign-up-complete-bg {
+  display: flex;
+  background: #95c1cb;
+  background-size: 100% auto;
+  justify-content: center;
+  height: 100vh;
+}
+.sign-up-complete {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  height: 30%;
+  margin-top: 200px;
+  font-size: 28px;
+  background: #fbb32e;
+  border-radius: 35px;
+  line-height: 2;
+}
+.sign-up-complete h2 {
+  margin: 30px 0;
+  font-size: 42px;
+}
+.sign-up-complete a {
+  color: #fff;
+  text-decoration: none;
+}
+.sign-up-complete a:hover {
+  color: grey;
 }
 .books-container {
   display: flex;
@@ -284,6 +315,10 @@ nav a:hover {
     font-size: 18px;
     margin-top: 25px;
   }
+  .sign-up-complete {
+    width: 70%;
+    height: 30%;
+  }
 }
 
 @media only screen and (max-width: 706px) {
@@ -315,6 +350,14 @@ nav a:hover {
     grid-row-end: 2;
     color: #84d2e5;
   }
+  .sign-up-complete {
+    font-size: 24px;
+    width: 80%;
+    height: 30%;
+  }
+  .sign-up-complete h2 {
+    font-size: 34px;
+  }
 }
 @media only screen and (max-width: 515px) {
   header {
@@ -324,6 +367,15 @@ nav a:hover {
     display: grid;
     grid-template-columns: 1;
     grid-template-rows: 600px 1100px;
+  }
+  .sign-up-complete {
+    font-size: 22px;
+    width: 80%;
+    height: 30%;
+    padding: 5px 30px;
+  }
+  .sign-up-complete h2 {
+    font-size: 30px;
   }
 }
 @media only screen and (max-width: 450px) {
@@ -337,5 +389,11 @@ nav a:hover {
   }
   .sign-up-form {
     font-size: 20px;
+  }
+}
+@media only screen and (min-width: 1920px) {
+  .sign-up-complete {
+    width: 600px;
+    height: 480px;
   }
 }
