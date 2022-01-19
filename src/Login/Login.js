@@ -13,6 +13,7 @@ function LogIn() {
         <form>
           <label htmlFor='libraryCard'>Library card:</label>
           <input
+            required
             type='text'
             id='libraryCard'
             name='libraryCard'
@@ -23,7 +24,8 @@ function LogIn() {
           />
           <label htmlFor='password'>Password:</label>
           <input
-            type='text'
+            required
+            type='password'
             id='password'
             name='password'
             onChange={(e) => {
