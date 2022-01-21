@@ -7,6 +7,7 @@ import SignUpComplete from './Signup/SignUpComplete';
 import AccountService from './Services/AccountService';
 import BookForm from './BookForm/BookForm';
 import SubjectForm from './SubjectForm/SubjectForm';
+import Subjects from './Subjects/Subjects';
 
 function App() {
   const navBar = () => {
@@ -20,9 +21,12 @@ function App() {
     } else
       return (
         <nav>
+          {AccountService.getUserType() === 'LIBRARIAN' && (
+            <Link to='/subjects'>Subjects</Link>
+          )}
           {(AccountService.getUserType() === 'LIBRARIAN' ||
             AccountService.getUserType() === 'MEMBER') && (
-            <Link to='books'> Books</Link>
+            <Link to='/books'> Books</Link>
           )}
           <Link to='/login' onClick={AccountService.clearUser}>
             Sign out
@@ -45,6 +49,7 @@ function App() {
           <Route path='/books' element={<Books />} />
           <Route exact path='/new/book' element={<BookForm />} />
           <Route exact path='/new/subject' element={<SubjectForm />} />
+          <Route path='subjects' element={<Subjects />} />
         </Routes>
       </main>
     </Router>

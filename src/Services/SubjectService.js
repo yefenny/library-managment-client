@@ -1,7 +1,7 @@
 import CONFIG from '../config';
 const SubjectService = {
   getAllSubject() {
-    return fetch(`${CONFIG.API_ENDPOINT}meals/`, {
+    return fetch(`${CONFIG.API_ENDPOINT}catalog/subjects`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -15,7 +15,7 @@ const SubjectService = {
         }
         return res.json();
       })
-      .then((meals) => meals);
+      .then((subjects) => subjects);
   },
   getFilteredMeals(query) {
     return fetch(`${CONFIG.API_ENDPOINT}meals/find/${query}`, {

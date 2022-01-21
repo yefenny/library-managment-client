@@ -9,6 +9,7 @@ function SubjectForm() {
   });
   const handleSubmit = (e) => {
     e.preventDefault();
+    setSubjectForm({ ...subjectForm, error: '' });
     if (subjectForm.subject.trim().length < 1) {
       setSubjectForm({ ...subjectForm, error: 'Subject is required' });
       return;
@@ -22,7 +23,7 @@ function SubjectForm() {
         console.log(res);
       })
       .catch((error) => {
-        setSubjectForm({ ...subjectForm, error });
+        setSubjectForm({ ...subjectForm, error: 'Subject already exist' });
       });
   };
   if (AccountService.getUserType() === 'LIBRARIAN') {
@@ -45,7 +46,7 @@ function SubjectForm() {
               placeholder='E.g action and adventure, classics, fantasy, horror ...'
               onChange={(e) => {
                 setSubjectForm({ ...subjectForm, subject: e.target.value });
-              } }
+              }}
             ></input>
             <button type='submit'>Save</button>
           </form>
