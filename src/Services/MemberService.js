@@ -17,7 +17,7 @@ const MemberService = {
     });
   },
   logIn(user) {
-    return fetch(`${config.API_ENDPOINT}users/login`, {
+    return fetch(`${config.API_ENDPOINT}account/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

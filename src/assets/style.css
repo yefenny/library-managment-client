@@ -93,7 +93,9 @@ nav a {
 nav a:hover {
   color: #be943a;
 }
-
+input {
+  font-family: 'Teko', sans-serif;
+}
 .sign-up-container {
   display: grid;
   grid-template-columns: 60% 40%;
@@ -236,13 +238,17 @@ nav a:hover {
 }
 .searchContainer input {
   color: #f2f2f2;
-  font-family: 'Teko', sans-serif;
   width: 90%;
   background: #224a59;
   border-bottom: 1px solid #fdf7f0;
   padding: 10px 15px;
   border-radius: 5px;
   font-size: 24px;
+}
+.searchContainer button.addBook {
+  font-size: 22px;
+  width: 150px;
+  margin-bottom: 20px;
 }
 
 .searchContainer input::placeholder {
@@ -289,7 +295,37 @@ nav a:hover {
   border-radius: 3px;
   padding-top: 20px;
 }
-
+.form-background {
+  display: flex;
+  background: #224a59;
+  height: 100vh;
+  color: #f2f2f2;
+}
+.add-form {
+  width: 600px;
+  margin: 100px auto 300px auto;
+  font-size: 24px;
+}
+.add-form h2 {
+  font-size: 32px;
+}
+.add-form form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+}
+.add-form form input {
+  background: #224a59;
+  border-bottom: 1px solid #fdf7f0;
+  border-radius: 5px;
+  font-size: 24px;
+  margin: 20px 0;
+  color: #f2f2f2;
+}
+.add-form form input::placeholder {
+  color: #f2f2f2;
+  opacity: 0.6;
+}
 @media only screen and (max-width: 960px) {
   .sign-up-form {
     font-size: 20px;
