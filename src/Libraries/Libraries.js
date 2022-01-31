@@ -56,7 +56,7 @@ class Libraries extends Component {
             placeholder='Search by title'
             value={this.state.searchTerm}
             onChange={this.editSearchValue}
-            autocomplete='off'
+            autoComplete='off'
           />
         </div>
         <div className='list-item remove-border'>

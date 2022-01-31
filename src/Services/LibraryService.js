@@ -69,12 +69,13 @@ const LibraryService = {
       })
       .then((subject) => subject);
   },
-  deleteMeal(id) {
-    return fetch(`${CONFIG.API_ENDPOINT}meals/${id}`, {
+  deleteLibrary(values) {
+    return fetch(`${CONFIG.API_ENDPOINT}catalog/library/remove`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      body: JSON.stringify(values)
     }).then((res) => {
       if (!res.ok) {
         return res.json().then((res) => {

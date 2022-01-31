@@ -329,11 +329,18 @@ input {
   opacity: 0.6;
 }
 .add-button {
-  width: 120px;
+  width: fit-content;
+  padding: 10px 20px;
+  min-width: 200px;
   margin-left: 80px;
+  width: fit-content padding;
+  border-radius: 5px;
+  align-self: center;
+  margin-right: 50px;
+  background-color: #fbb32e;
 }
 button.add-button:hover {
-  background: #dfdbd7;
+  background: #edb949;
 }
 .list-item {
   margin-left: 80px;
@@ -356,8 +363,9 @@ button.add-button:hover {
 }
 .list-item ul li a {
   padding-top: 5px;
-  color: #fdf7f0;
+  color: #fbb32e;
   text-decoration: none;
+  font-weight: 600;
 }
 .list-item ul li a:hover {
   color: #be943a;
@@ -387,22 +395,27 @@ button.add-button:hover {
 .modalBackground {
   width: 100vw;
   height: 100vh;
-  background-color: rgba(200, 200, 200);
+  background-color: rgba(34, 74, 89, 0.4);
   position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
+  left: 0px;
+  top: 0px;
+  z-index: 10;
 }
 
 .modalContainer {
   width: 500px;
-  height: 500px;
+  height: 300px;
   border-radius: 12px;
-  background-color: white;
+  background: #fdfdfd;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  color: #224a59;
   display: flex;
   flex-direction: column;
   padding: 25px;
+  z-index: 15;
 }
 
 .modalContainer .title {
@@ -444,7 +457,7 @@ button.add-button:hover {
   height: 45px;
   margin: 10px;
   border: none;
-  background-color: cornflowerblue;
+  background-color: crimson;
   color: white;
   border-radius: 8px;
   font-size: 20px;
@@ -452,8 +465,9 @@ button.add-button:hover {
 }
 
 #cancelBtn {
-  background-color: crimson;
+  background-color: #224a59;
 }
+
 .view-item {
   display: flex;
   flex-direction: column;

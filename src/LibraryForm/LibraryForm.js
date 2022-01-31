@@ -46,7 +46,7 @@ export default class LibraryForm extends Component {
 
     LibraryService.createLibrary(library)
       .then((res) => {
-        window.location = '/libraries'
+        window.location = '/libraries';
       })
       .catch((error) => {
         this.setState({ error: error.message.message });
@@ -122,7 +122,9 @@ export default class LibraryForm extends Component {
               }}
             />
 
-            <button type='submit'>Save</button>
+            <button type='submit' className='add-button'>
+              Save
+            </button>
           </form>
         </div>
       </div>
