@@ -64,6 +64,7 @@ body {
 button {
   font-family: 'Oswald', sans-serif;
   padding: 5px;
+  cursor: pointer;
 }
 header {
   display: flex;
@@ -300,6 +301,7 @@ input {
   background: #224a59;
   height: 100vh;
   color: #f2f2f2;
+  justify-content: center;
 }
 .add-form {
   width: 600px;
@@ -336,11 +338,159 @@ button.add-button:hover {
 .list-item {
   margin-left: 80px;
   margin-top: 20px;
+  margin-right: 80px;
   border-top: 1px solid white;
 }
-.list-item ul li {
-  text-decoration: none;
+.remove-border {
+  border-top: none;
+  margin-top: 0;
+}
+.list-item ul {
+  list-style: none;
   font-size: 28px;
+}
+.list-item ul li {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin: 30px 0px;
+}
+.list-item ul li a {
+  padding-top: 5px;
+  color: #fdf7f0;
+  text-decoration: none;
+}
+.list-item ul li a:hover {
+  color: #be943a;
+}
+.list-item ul li button {
+  margin: 0px 30px;
+  font-size: 22px;
+  border-radius: 3px;
+  padding: 3px 10px;
+}
+.yellow-button {
+  background: #edb949;
+  color: #48494a;
+}
+.yellow-button:hover {
+  background: #be943a;
+  color: #2c2c2c;
+}
+.delete-button {
+  background: #7e2e40;
+  color: #f2f2f2;
+}
+.delete-button:hover {
+  background: #ad3d56;
+  color: #f2f2f2;
+}
+.modalBackground {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(200, 200, 200);
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContainer {
+  width: 500px;
+  height: 500px;
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+}
+
+.modalContainer .title {
+  display: inline-block;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.titleCloseBtn {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.titleCloseBtn button {
+  background-color: transparent;
+  border: none;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.modalContainer .body {
+  flex: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.7rem;
+  text-align: center;
+}
+
+.modalContainer .footer {
+  flex: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContainer .footer button {
+  width: 150px;
+  height: 45px;
+  margin: 10px;
+  border: none;
+  background-color: cornflowerblue;
+  color: white;
+  border-radius: 8px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#cancelBtn {
+  background-color: crimson;
+}
+.view-item {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  background-color: #fbb32e;
+  block-size: fit-content;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 24px;
+  margin-top: 180px;
+  min-width: 450px;
+  justify-content: center;
+  color: #022234;
+}
+
+.view-item p {
+  margin-top: 14px;
+}
+
+.view-item h2 {
+  font-size: 30px;
+}
+
+.blue-button {
+  font-size: 22px;
+  width: fit-content;
+  align-self: center;
+  padding: 10px;
+  margin-top: 30px;
+  border-radius: 5px;
+  background: #022234;
+  color: #fefefe;
+}
+.blue-button:hover {
+  background: #022d46;
+  cursor: pointer;
 }
 @media only screen and (max-width: 960px) {
   .sign-up-form {
@@ -415,6 +565,16 @@ button.add-button:hover {
   .sign-up-complete h2 {
     font-size: 30px;
   }
+  .view-item {
+    min-width: 300px;
+    font-size: 20px;
+  }
+  .view-item h2 {
+    font-size: 24px;
+  }
+  .blue-button {
+    font-size: 18px;
+  }
 }
 @media only screen and (max-width: 450px) {
   header {
@@ -428,7 +588,11 @@ button.add-button:hover {
   .sign-up-form {
     font-size: 20px;
   }
+  .view-container {
+    max-width: 300px;
+  }
 }
+
 @media only screen and (min-width: 1920px) {
   .sign-up-complete {
     width: 600px;

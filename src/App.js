@@ -8,6 +8,9 @@ import AccountService from './Services/AccountService';
 import BookForm from './BookForm/BookForm';
 import SubjectForm from './SubjectForm/SubjectForm';
 import Subjects from './Subjects/Subjects';
+import Libraries from './Libraries/Libraries';
+import LibraryForm from './LibraryForm/LibraryForm';
+import Library from './Library/Library';
 
 function App() {
   const navBar = () => {
@@ -22,13 +25,23 @@ function App() {
       return (
         <nav>
           {AccountService.getUserType() === 'LIBRARIAN' && (
+            <Link to='/libraries'>Libraries</Link>
+          )}
+          {AccountService.getUserType() === 'LIBRARIAN' && (
             <Link to='/subjects'>Subjects</Link>
           )}
+
           {(AccountService.getUserType() === 'LIBRARIAN' ||
             AccountService.getUserType() === 'MEMBER') && (
             <Link to='/books'> Books</Link>
           )}
-          <Link to='/login' onClick={AccountService.clearUser}>
+          <Link
+            to=''
+            onClick={() => {
+              window.location = '/login';
+              AccountService.clearUser();
+            }}
+          >
             Sign out
           </Link>
         </nav>
@@ -40,16 +53,20 @@ function App() {
         <h1>NGT Library System Manager</h1>
         {navBar()}
       </header>
-      <main>
+      <main className='App'>
         <Routes>
           <Route exact path='/'></Route>
           <Route path='/signup' element={<SignUp />} />
           <Route path='/welcome' element={<SignUpComplete />} />
           <Route path='/login' element={<LogIn />} />
           <Route path='/books' element={<Books />} />
+          <Route path='/libraries' element={<Libraries />} />
           <Route exact path='/new/book' element={<BookForm />} />
           <Route exact path='/new/subject' element={<SubjectForm />} />
           <Route path='subjects' element={<Subjects />} />
+          <Route exact path='/update/subject' element={<SubjectForm />} />
+          <Route exact path='/new/library' element={<LibraryForm />} />
+          <Route path='/library/:name' element={<Library />} />
         </Routes>
       </main>
     </Router>

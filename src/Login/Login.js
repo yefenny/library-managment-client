@@ -64,7 +64,7 @@ function LogIn() {
             }}
             value={formData.password}
           />
-          <button>Create</button>
+          <button>Log in</button>
           <span className='login-create'>
             Don't have an account? <Link to='/signup'> Create Account</Link>
           </span>

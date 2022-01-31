@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import AccountService from '../Services/AccountService';
 import SubjectService from '../Services/SubjectService';
 
@@ -7,6 +8,13 @@ function SubjectForm() {
     subject: '',
     error: ''
   });
+  const location = useLocation();
+  const { state } = location;
+
+  useEffect(() => {
+    if (state) setSubjectForm({ error:'', subject: state.subject.name });
+  }, [state]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubjectForm({ ...subjectForm, error: '' });
@@ -30,7 +38,7 @@ function SubjectForm() {
     return (
       <div className='form-background'>
         <div className='add-form'>
-          <h2>New Subject</h2>
+          <h2>{state ? 'Update Subject' : 'New Subject'}</h2>
           <form
             onSubmit={(e) => {
               handleSubmit(e);
