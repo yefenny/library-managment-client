@@ -506,6 +506,9 @@ button.add-button:hover {
   background: #022d46;
   cursor: pointer;
 }
+ul.white-list li a {
+  color: #f2f2f2;
+}
 @media only screen and (max-width: 960px) {
   .sign-up-form {
     font-size: 20px;

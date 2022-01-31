@@ -49,7 +49,7 @@ function Subjects() {
         </header>
 
         <button
-          className='add-button'
+          className='addBook'
           onClick={() => {
             window.location = '/new/subject';
           }}

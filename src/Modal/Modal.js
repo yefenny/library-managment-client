@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Modal({ setModal, modalIsOpen, text, deleteLibrary }) {
+function Modal({ setModal, modalIsOpen, text, deleteFunction }) {
   const hideDiv = () => {
     if (!modalIsOpen) return { display: 'none' };
     else return { display: 'flex' };
@@ -18,7 +18,7 @@ function Modal({ setModal, modalIsOpen, text, deleteLibrary }) {
           </button>
         </div>
         <div className='title'>
-          <h1>Are You Sure You Want to delete the library?</h1>
+          <h1>{text}</h1>
         </div>
         {/* <div className='body'>
           <p>The next page looks amazing. Hope you want to go there!</p>
@@ -34,7 +34,7 @@ function Modal({ setModal, modalIsOpen, text, deleteLibrary }) {
           </button>
           <button
             onClick={() => {
-              deleteLibrary();
+              deleteFunction();
             }}
           >
             Continue

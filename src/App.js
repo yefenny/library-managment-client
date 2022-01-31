@@ -11,6 +11,9 @@ import Subjects from './Subjects/Subjects';
 import Libraries from './Libraries/Libraries';
 import LibraryForm from './LibraryForm/LibraryForm';
 import Library from './Library/Library';
+import Authors from './Authors/Authors';
+import Author from './Author/Author';
+import AuthorForm from './AuthorForm/AuthorForm';
 
 function App() {
   const navBar = () => {
@@ -26,6 +29,9 @@ function App() {
         <nav>
           {AccountService.getUserType() === 'LIBRARIAN' && (
             <Link to='/libraries'>Libraries</Link>
+          )}
+          {AccountService.getUserType() === 'LIBRARIAN' && (
+            <Link to='/authors'>Authors</Link>
           )}
           {AccountService.getUserType() === 'LIBRARIAN' && (
             <Link to='/subjects'>Subjects</Link>
@@ -64,9 +70,11 @@ function App() {
           <Route exact path='/new/book' element={<BookForm />} />
           <Route exact path='/new/subject' element={<SubjectForm />} />
           <Route path='subjects' element={<Subjects />} />
-          <Route exact path='/update/subject' element={<SubjectForm />} />
           <Route exact path='/new/library' element={<LibraryForm />} />
           <Route path='/library/:name' element={<Library />} />
+          <Route path='authors' element={<Authors />} />
+          <Route path='/author/:name' element={<Author />} />
+          <Route exact path='/new/author' element={<AuthorForm />} />
         </Routes>
       </main>
     </Router>

@@ -56,7 +56,7 @@ export default class LibrariesList extends Component {
                 setModal={this.setModalOpen}
                 text={`Are you sure you want to delete ${val.name}`}
                 modalIsOpen={this.state.modalIsOpen}
-                deleteLibrary={this.deleteLibray}
+                deleteFunction={this.deleteLibray}
               />
             </li>
           );
