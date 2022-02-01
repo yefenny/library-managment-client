@@ -51,8 +51,8 @@ const AuthorService = {
       })
       .then((meal) => meal);
   },
-  createLibrary(values) {
-    return fetch(`${CONFIG.API_ENDPOINT}catalog/library/add`, {
+  createAuthor(values) {
+    return fetch(`${CONFIG.API_ENDPOINT}catalog/author/add`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -67,7 +67,7 @@ const AuthorService = {
         }
         return res.json();
       })
-      .then((subject) => subject);
+      .then((values) => values);
   },
   deleteAuthor(values) {
     return fetch(`${CONFIG.API_ENDPOINT}catalog/author/remove`, {
@@ -84,9 +84,9 @@ const AuthorService = {
       }
     });
   },
-  updateMeal(id, values) {
-    return fetch(`${CONFIG.API_ENDPOINT}meals/${id}`, {
-      method: 'PATCH',
+  updateAuthor(values) {
+    return fetch(`${CONFIG.API_ENDPOINT}catalog/author/update`, {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },

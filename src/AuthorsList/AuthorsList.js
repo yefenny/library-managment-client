@@ -41,24 +41,29 @@ export default function AuthorList({ authors }) {
             <Link to={link} state={{ author: val }}>
               {val.name}
             </Link>
-            <button
-              className='yellow-button'
-              onClick={() => {
-                setModalOpen(true);
-                setAuthorToDelete(val.name);
-              }}
-            >
-              Edit
-            </button>{' '}
-            <button
-              className='delete-button'
-              onClick={() => {
-                setModalOpen(true);
-                setAuthorToDelete(val.name);
-              }}
-            >
-              Remove
-            </button>{' '}
+            <Link to={`/update/author/${val.name}`}state={{ author: val }}>
+              <button
+                className='yellow-button'
+                onClick={() => {
+                  setModalOpen(true);
+                  setAuthorToDelete(val.name);
+                }}
+              >
+                Edit
+              </button>{' '}
+            </Link>
+            <Link to=''>
+              <button
+                className='delete-button'
+                onClick={() => {
+                  setModalOpen(true);
+                  setAuthorToDelete(val.name);
+                }}
+              >
+                Remove
+              </button>{' '}
+            </Link>
+
             <Modal
               setModal={setModalOpen}
               text={`Are you sure you want to delete ${val.name}`}

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { flushSync } from 'react-dom';
 import { useLocation } from 'react-router-dom';
 import AccountService from '../Services/AccountService';
 import AuthorService from '../Services/AuthorService';
@@ -6,13 +7,21 @@ import AuthorService from '../Services/AuthorService';
 function AuthorForm() {
   const [authorForm, setAuthorForm] = useState({
     author: '',
+    description: '',
+    isUpdate: false,
     error: ''
   });
   const location = useLocation();
   const { state } = location;
 
   useEffect(() => {
-    if (state) setAuthorForm({ error: '', author: state.author.name });
+    if (state)
+      setAuthorForm({
+        error: '',
+        author: state.author.name,
+        description: state.author.description,
+        isUpdate: true
+      });
   }, [state]);
 
   const handleSubmit = (e) => {
@@ -22,17 +31,34 @@ function AuthorForm() {
       setAuthorForm({ ...authorForm, error: 'Author is required' });
       return;
     }
-    AuthorService.createAuthor({
+    const newAuthor = {
       barcode: AccountService.getBarcode(),
       number: AccountService.getCardNumber(),
-      author: authorForm.author
-    })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        setAuthorForm({ ...authorForm, error: 'Author already exist' });
-      });
+      author: authorForm.author,
+      description: authorForm.description
+    };
+
+    if (authorForm.isUpdate) {
+      AuthorService.updateAuthor(newAuthor)
+        .then((res) => {
+          console.log(res);
+          window.location = `/authors/`;
+        })
+        .catch((error) => {
+          console.log(error);
+          setAuthorForm({ ...authorForm, error });
+        });
+    } else {
+      AuthorService.createAuthor(newAuthor)
+        .then((res) => {
+          console.log(res);
+          window.location = '/authors';
+        })
+        .catch((error) => {
+          console.log(error);
+          setAuthorForm({ ...authorForm, error: 'Author already exist' });
+        });
+    }
   };
   if (AccountService.getUserType() === 'LIBRARIAN') {
     return (
@@ -50,24 +76,27 @@ function AuthorForm() {
               type='text'
               id='author'
               name='author'
+              disabled={authorForm.isUpdate}
               value={authorForm.author}
               placeholder='Insert author full name'
               onChange={(e) => {
                 setAuthorForm({ ...authorForm, author: e.target.value });
               }}
             ></input>
-            <label htmlFor='author'>Description:</label>
+            <label htmlFor='description'>Description:</label>
             <input
               type='text'
-              id='author'
-              name='author'
-              value={authorForm.author}
+              id='description'
+              name='description'
+              value={authorForm.description}
               placeholder='Any desired description..'
               onChange={(e) => {
-                setAuthorForm({ ...authorForm, author: e.target.value });
+                setAuthorForm({ ...authorForm, description: e.target.value });
               }}
             ></input>
-            <button type='submit' className='add-button'>Save</button>
+            <button type='submit' className='add-button'>
+              Save
+            </button>
           </form>
         </div>
       </div>

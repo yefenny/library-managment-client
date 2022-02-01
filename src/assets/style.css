@@ -367,6 +367,7 @@ button.add-button:hover {
   text-decoration: none;
   font-weight: 600;
 }
+
 .list-item ul li a:hover {
   color: #be943a;
 }
@@ -379,6 +380,9 @@ button.add-button:hover {
 .yellow-button {
   background: #edb949;
   color: #48494a;
+  min-width: 200px;
+  height: 60px;
+  padding: 3px 10px;
 }
 .yellow-button:hover {
   background: #be943a;
@@ -387,6 +391,9 @@ button.add-button:hover {
 .delete-button {
   background: #7e2e40;
   color: #f2f2f2;
+  min-width: 200px;
+  height: 60px;
+  margin-top: 5px;
 }
 .delete-button:hover {
   background: #ad3d56;

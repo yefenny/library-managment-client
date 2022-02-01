@@ -75,6 +75,7 @@ function App() {
           <Route path='authors' element={<Authors />} />
           <Route path='/author/:name' element={<Author />} />
           <Route exact path='/new/author' element={<AuthorForm />} />
+          <Route exact path='/update/author/:name' element={<AuthorForm />} />
         </Routes>
       </main>
     </Router>

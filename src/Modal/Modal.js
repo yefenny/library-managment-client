@@ -18,12 +18,13 @@ function Modal({ setModal, modalIsOpen, text, deleteFunction }) {
           </button>
         </div>
         <div className='title'>
-          <h1>{text}</h1>
+          <h1>Are you sure you want to delete it ?</h1>
         </div>
         {/* <div className='body'>
           <p>The next page looks amazing. Hope you want to go there!</p>
         </div> */}
         <div className='footer'>
+        
           <button
             onClick={() => {
               setModal(false);
