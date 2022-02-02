@@ -299,15 +299,17 @@ input {
 .form-background {
   display: flex;
   background: #224a59;
-  height: 100vh;
   color: #f2f2f2;
   justify-content: center;
+  height: fit-content;
+  min-height: 100vh;
 }
 .add-form {
   width: 600px;
   margin: 100px auto 300px auto;
   font-size: 24px;
 }
+
 .add-form h2 {
   font-size: 32px;
 }
@@ -327,6 +329,14 @@ input {
 .add-form form input::placeholder {
   color: #f2f2f2;
   opacity: 0.6;
+}
+.add-form form select {
+  background: #224a59;
+  font-family: 'Teko', sans-serif;
+  border-bottom: 1px solid #fdf7f0;
+  border-radius: 5px;
+  margin: 20px 0;
+  color: #fff;
 }
 .add-button {
   width: fit-content;
@@ -621,5 +631,35 @@ ul.white-list li a {
   .sign-up-complete {
     width: 600px;
     height: 480px;
+  }
+  .books-container {
+    padding: 0px 400px;
+  }
+}
+@media only screen and (min-width: 2000px) {
+  .sign-up-complete {
+    width: 600px;
+    height: 480px;
+  }
+  .books-container {
+    padding: 0px 600px;
+  }
+}
+@media only screen and (min-width: 2500px) {
+  .sign-up-complete {
+    width: 600px;
+    height: 480px;
+  }
+  .books-container {
+    padding: 0px 30%;
+  }
+}
+@media only screen and (min-width: 3000px) {
+  .sign-up-complete {
+    width: 600px;
+    height: 480px;
+  }
+  .books-container {
+    padding: 0px 30%;
   }
 }

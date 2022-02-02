@@ -14,6 +14,13 @@ const BookService = {
       }
       return res.json();
     });
+  },
+  createOptions(array, name){
+    return array.map(val => {
+     return <option key={val[name]} value={val[name]}>
+        {val[name]}
+      </option>
+    })
   }
 };
 
