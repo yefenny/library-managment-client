@@ -1,11 +1,40 @@
+import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import BookList from '../BookList/BookList';
 import AccountService from '../Services/AccountService';
 import BookService from '../Services/BookService';
 
 function Books() {
+  const [books, setBooks] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    BookService.getBooks().then((res) => {
+      setBooks(res);
+    });
+  }, []);
   if (!AccountService.getCardNumber() && !AccountService.getBarcode()) {
     window.location = 'login';
   } else {
+    const filterFunction = (book) => {
+      let isInclude = false;
+      for (let i = 0; i < book.subjects.length; i++) {
+        isInclude = book.subjects[0].name
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase());
+      }
+
+      if (
+        book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        book.author['name'].toLowerCase().includes(searchTerm.toLowerCase()) ||
+        book.publicationDate.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        isInclude
+      )
+        return true;
+    };
+    const dynamicSearch = () => {
+      return books.filter(filterFunction);
+    };
     return (
       <div className='books-container bg-books'>
         <header>
@@ -28,87 +57,16 @@ function Books() {
             type='text'
             id='searchBy'
             name='searchBy'
+            value={searchTerm}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+            }}
             placeholder='Search by title, author, subject category and publication date'
           />
         </div>
         <div className='books-list-container'>
-          <div className='book'>
-            <div className='container'>
-              <div className='card'>
-                <div className='bkg'></div>
-                <div className='info'>
-                  <h1>Book 1</h1>
-                  <h3>Author</h3>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='book'>
-            <div className='container'>
-              <div className='card'>
-                <div className='bkg'></div>
-                <div className='info'>
-                  <h1>Book 1</h1>
-                  <h3>Author</h3>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='book'>
-            <div className='container'>
-              <div className='card'>
-                <div className='bkg'></div>
-                <div className='info'>
-                  <h1>Book 1</h1>
-                  <h3>Author</h3>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='book'>
-            <div className='container'>
-              <div className='card'>
-                <div className='bkg'></div>
-                <div className='info'>
-                  <h1>Book 1</h1>
-                  <h3>Author</h3>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='book'>
-            <div className='container'>
-              <div className='card'>
-                <div className='bkg'></div>
-                <div className='info'>
-                  <h1>Book 1</h1>
-                  <h3>Author</h3>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='book'>
-            <div className='container'>
-              <div className='card'>
-                <div className='bkg'></div>
-                <div className='info'>
-                  <h1>Book 1</h1>
-                  <h3>Author</h3>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='book'>
-            <div className='container'>
-              <div className='card'>
-                <div className='bkg'></div>
-                <div className='info'>
-                  <h1>Book 1</h1>
-                  <h3>Author</h3>
-                </div>
-              </div>
-            </div>
-          </div>
+          {<BookList books={dynamicSearch()} />}
+       
         </div>
       </div>
     );

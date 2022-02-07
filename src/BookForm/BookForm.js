@@ -8,25 +8,6 @@ import LibraryService from '../Services/LibraryService';
 import SubjectService from '../Services/SubjectService';
 
 function BookForm() {
-  // const [form, setForm] = useState({
-  //   barcode: '',
-  //   number: '',
-  //   libraryName: '',
-  //   rack: '',
-  //   location: '',
-  //   title: '',
-  //   publisher: '',
-  //   language: '',
-  //   numberOfPages: '',
-  //   authorName: '',
-  //   subjectNames: '',
-  //   format: '',
-  //   publicationDate: '',
-  //   price: '',
-  //   referenceOnly: false,
-  //   isbn: '',
-  //   libraries: []
-  // });
   const [library, setLibrary] = useState('');
   const [rack, setRack] = useState(0);
   const [location, setLocation] = useState('');
@@ -35,13 +16,15 @@ function BookForm() {
   const [publisher, setPublisher] = useState('');
   const [language, setLanguage] = useState('');
   const [numberOfPages, setNumberOfPages] = useState(0);
+  const [author, setAuthor] = useState('');
   const [subjectNames, setSubjectNames] = useState([]);
-  const [format, setFormat] = useState([]);
+  const [subject, setSubject] = useState('');
+  const [format, setFormat] = useState('HARDCOVER');
   const [publicationDate, setPublicationDate] = useState(
     dateFormat(new Date(), 'yyyy-MM-dd')
   );
   const [price, setPrice] = useState(0);
-  const [referenceOnly, setReferenceOnly] = useState(false);
+  const [referenceOnly, setReferenceOnly] = useState(true);
   const [error, setError] = useState('');
   const [libraries, setLibraries] = useState([]);
   const [authors, setAuthors] = useState([]);
@@ -50,32 +33,104 @@ function BookForm() {
   useEffect(() => {
     let isCancelled = false;
     LibraryService.getAllLibrary().then((res) => {
-      if (!isCancelled) setLibraries(res);
+      if (!isCancelled) {
+        setLibraries(res);
+        setLibrary(res[0].name);
+      }
     });
     AuthorService.getAuthors().then((res) => {
-      if (!isCancelled) setAuthors(res);
+      if (!isCancelled) {
+        setAuthors(res);
+        setAuthor(res[0].name);
+      }
     });
     SubjectService.getAllSubject().then((res) => {
-      if (!isCancelled) setSubjects(res);
+      if (!isCancelled) {
+        setSubjects(res);
+        setSubject(res[0].name);
+      }
     });
 
     return () => {
       isCancelled = true;
     };
-  }, [libraries, authors]);
+  }, []);
 
-  const disableDate = () => {
-    // return false;
+  const subjectlist = () => {
+    let string = '';
+    for (let i = 0; i <= subjectNames.length; i++) {
+      if (i < subjectNames.length - 1) string += `${subjectNames[i]}, `;
+      else if (i === subjectNames.length - 1) string += `${subjectNames[i]}`;
+    }
+    return string;
+  };
+  const addSubject = () => {
+    if (!subjectNames.includes(subject))
+      setSubjectNames([...subjectNames, subject]);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setError('');
+    const stringToCheck = {
+      title,
+      language,
+      location,
+      publisher,
+      isbn
+    };
+    for (const [key, value] of Object.entries(stringToCheck)) {
+      if (value.trim().length < 1) {
+        setError(`${key} is required`);
+        return;
+      }
+    }
+    const numbersToCheck = {
+      numberOfPages,
+      price,
+      rack
+    };
+    for (const [key, value] of Object.entries(numbersToCheck)) {
+      if (value < 0) {
+        setError(`${key} should be equal or greater than 0 `);
+        return;
+      }
+    }
+    const newBook = {
+      barcode: AccountService.getBarcode(),
+      number: AccountService.getCardNumber(),
+      libraryName: library,
+      rack,
+      location,
+      isbn,
+      title,
+      publisher,
+      language,
+      numberOfPages,
+      author,
+      subjectNames,
+      format,
+      publicationDate,
+      price,
+      referenceOnly
+    };
+    BookService.addBooks(newBook)
+      .then((res) => {
+        console.log(res);
+        window.location = '/books';
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   if (AccountService.getUserType() === 'LIBRARIAN') {
     return (
       <div className='form-background'>
         <div className='add-form'>
-          <h2>New Book</h2>
+          <h2>New book</h2>
           <form
             onSubmit={(e) => {
-              this.handleSubmit(e);
+              handleSubmit(e);
             }}
           >
             <div className='error'>{error}</div>
@@ -88,11 +143,39 @@ function BookForm() {
               onChange={(e) => {
                 setTitle(e.target.value);
               }}
+              required
             />
             <label htmlFor='author'>Author:</label>
-            <select>{BookService.createOptions(authors, 'name')}</select>
-            <label htmlFor='subject'>Subjects:</label>
-            <select>{BookService.createOptions(subjects, 'name')}</select>
+            <select
+              value={author}
+              onChange={(e) => {
+                setAuthor(e.target.value);
+              }}
+            >
+              {BookService.createOptions(authors, 'name')}
+            </select>
+            <div className='subject-div'>
+              <label htmlFor='subject'>Subjects:</label>
+              <select
+                value={subject}
+                onChange={(e) => {
+                  setSubject(e.target.value);
+                }}
+              >
+                {BookService.createOptions(subjects, 'name')}
+              </select>
+              <button
+                onClick={() => {
+                  addSubject();
+                }}
+              >
+                Add subject
+              </button>
+              <div>
+                <span>Selected subjects:</span>
+                <p>{subjectlist()}</p>
+              </div>
+            </div>
 
             <label htmlFor='language'>Language:</label>
             <input
@@ -103,6 +186,7 @@ function BookForm() {
               onChange={(e) => {
                 setLanguage(e.target.value);
               }}
+              required
             />
             <label htmlFor='publicationDate'>Publication date:</label>
             <input
@@ -114,40 +198,66 @@ function BookForm() {
               onChange={(e) => {
                 setPublicationDate(e.target.value);
               }}
+              required
             />
             <label htmlFor='numberOfPages'>Number of pages:</label>
             <input
-              type='number'
+              type='text'
+              pattern='[0-9]*'
               id='numberOfPages'
               name='numberOfPages'
               min='0'
               value={numberOfPages}
               onChange={(e) => {
-                setNumberOfPages(e.target.value);
+                let value =
+                  e.target.validity.valid || e.target.value === ''
+                    ? e.target.value
+                    : numberOfPages;
+                setNumberOfPages(value);
               }}
+              required
             />
             <label htmlFor='price'>Price:</label>
             <input
-              type='number'
+              type='text'
+              pattern='[0-9]*'
               id='price'
               name='price'
               min='0'
               value={price}
               onChange={(e) => {
-                setPrice(e.target.value);
+                let value =
+                  e.target.validity.valid || e.target.value === ''
+                    ? e.target.value
+                    : price;
+                setPrice(value);
               }}
+              required
             />
             <label htmlFor='libraryName'>Library:</label>
-            <select>{BookService.createOptions(libraries, 'name')}</select>
+            <select
+              value={library}
+              onChange={(e) => {
+                setLibrary(e.target.value);
+              }}
+            >
+              {BookService.createOptions(libraries, 'name')}
+            </select>
             <label htmlFor='rack'>Rack:</label>
             <input
               type='text'
               id='rack'
               name='rack'
+              pattern='[0-9]*'
               value={rack}
               onChange={(e) => {
-                setRack(e.target.value);
+                let value =
+                  e.target.validity.valid || e.target.value === ''
+                    ? e.target.value
+                    : rack;
+                setRack(value);
               }}
+              required
             />
             <label htmlFor='location'>Location:</label>
             <input
@@ -158,9 +268,15 @@ function BookForm() {
               onChange={(e) => {
                 setLocation(e.target.value);
               }}
+              required
             />
             <label htmlFor='location'>Format:</label>
-            <select>
+            <select
+              value={format}
+              onChange={(e) => {
+                setFormat(e.target.value);
+              }}
+            >
               <option value='HARDCOVER'>Hardcover</option>
               <option value='PAPERBACK'>Paperback</option>
               <option value='AUDIO_BOOK'>Audio book</option>
@@ -178,6 +294,7 @@ function BookForm() {
               onChange={(e) => {
                 setPublisher(e.target.value);
               }}
+              required
             />
             <label htmlFor='isbn'>ISBN:</label>
             <input
@@ -188,9 +305,15 @@ function BookForm() {
               onChange={(e) => {
                 setIsbn(e.target.value);
               }}
+              required
             />
             <label htmlFor='location'>For reference only :</label>
-            <select>
+            <select
+              value={referenceOnly}
+              onChange={(e) => {
+                setReferenceOnly(e.target.value);
+              }}
+            >
               <option value='true'>True</option>
               <option value='false'>False</option>
             </select>

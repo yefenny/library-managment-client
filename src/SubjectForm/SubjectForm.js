@@ -12,7 +12,7 @@ function SubjectForm() {
   const { state } = location;
 
   useEffect(() => {
-    if (state) setSubjectForm({ error:'', subject: state.subject.name });
+    if (state) setSubjectForm({ error: '', subject: state.subject.name });
   }, [state]);
 
   const handleSubmit = (e) => {
@@ -29,6 +29,7 @@ function SubjectForm() {
     })
       .then((res) => {
         console.log(res);
+        window.location = '/subjects';
       })
       .catch((error) => {
         setSubjectForm({ ...subjectForm, error: 'Subject already exist' });

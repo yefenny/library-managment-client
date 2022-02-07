@@ -14,6 +14,7 @@ import Library from './Library/Library';
 import Authors from './Authors/Authors';
 import Author from './Author/Author';
 import AuthorForm from './AuthorForm/AuthorForm';
+import Book from './Book/Book';
 
 function App() {
   const navBar = () => {
@@ -74,6 +75,7 @@ function App() {
           <Route path='/library/:name' element={<Library />} />
           <Route path='authors' element={<Authors />} />
           <Route path='/author/:name' element={<Author />} />
+          <Route path='/book/:barcode' element={<Book />} />
           <Route exact path='/new/author' element={<AuthorForm />} />
           <Route exact path='/update/author/:name' element={<AuthorForm />} />
         </Routes>
