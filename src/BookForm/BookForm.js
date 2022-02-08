@@ -6,6 +6,8 @@ import AuthorService from '../Services/AuthorService';
 import BookService from '../Services/BookService';
 import LibraryService from '../Services/LibraryService';
 import SubjectService from '../Services/SubjectService';
+import { useLocation } from 'react-router-dom';
+import de from 'date-fns/esm/locale/de/index.js';
 
 function BookForm() {
   const [library, setLibrary] = useState('');
@@ -29,6 +31,9 @@ function BookForm() {
   const [libraries, setLibraries] = useState([]);
   const [authors, setAuthors] = useState([]);
   const [subjects, setSubjects] = useState([]);
+  const [isUpdate, setIsUpdate] = useState(false);
+  const usLocation = useLocation();
+  const { state } = usLocation;
 
   useEffect(() => {
     let isCancelled = false;
@@ -50,6 +55,27 @@ function BookForm() {
         setSubject(res[0].name);
       }
     });
+    if (state) {
+      setIsbn(state.book.isbn);
+      setTitle(state.book.title);
+      setPublisher(state.book.publisher);
+      setLanguage(state.book.language);
+      setNumberOfPages(state.book.numberOfPages);
+      setAuthor(state.book.author);
+      setFormat(state.book.format);
+      setPublicationDate(state.book.publicationDate);
+      setPrice(state.book.price);
+      setReferenceOnly(state.book.referenceOnly);
+      setIsUpdate(true);
+      setRack(state.book.rack.number);
+      setLocation(state.book.rack.location);
+      setLibrary(state.book.library.name);
+      const oldSubject = [];
+      for (let i = 0; i < state.book.subjects.length; i++) {
+        oldSubject.push(state.book.subjects[i].name);
+      }
+      setSubjectNames(oldSubject);
+    }
 
     return () => {
       isCancelled = true;
@@ -113,21 +139,34 @@ function BookForm() {
       price,
       referenceOnly
     };
-    BookService.addBooks(newBook)
-      .then((res) => {
-        console.log(res);
-        window.location = '/books';
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (isUpdate) {
+      delete newBook.rack;
+      delete newBook.location;
+      newBook.bookBarcode = state.book.barcode;
+      BookService.updateBook(newBook)
+        .then((res) => {
+          console.log(res);
+          window.location = '/books';
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else
+      BookService.addBooks(newBook)
+        .then((res) => {
+          console.log(res);
+          window.location = '/books';
+        })
+        .catch((error) => {
+          console.log(error);
+        });
   };
 
   if (AccountService.getUserType() === 'LIBRARIAN') {
     return (
       <div className='form-background'>
         <div className='add-form'>
-          <h2>New book</h2>
+          <h2>{state ? 'Update Book' : 'New Book'}</h2>
           <form
             onSubmit={(e) => {
               handleSubmit(e);
@@ -165,11 +204,20 @@ function BookForm() {
                 {BookService.createOptions(subjects, 'name')}
               </select>
               <button
+                type='button'
                 onClick={() => {
                   addSubject();
                 }}
               >
                 Add subject
+              </button>
+              <button
+                type='button'
+                onClick={() => {
+                  setSubjectNames([]);
+                }}
+              >
+                Clear subjects
               </button>
               <div>
                 <span>Selected subjects:</span>
@@ -250,6 +298,7 @@ function BookForm() {
               name='rack'
               pattern='[0-9]*'
               value={rack}
+              disabled={isUpdate}
               onChange={(e) => {
                 let value =
                   e.target.validity.valid || e.target.value === ''
@@ -265,6 +314,7 @@ function BookForm() {
               id='location'
               name='location'
               value={location}
+              disabled={isUpdate}
               onChange={(e) => {
                 setLocation(e.target.value);
               }}

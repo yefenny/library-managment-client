@@ -78,6 +78,8 @@ function App() {
           <Route path='/book/:barcode' element={<Book />} />
           <Route exact path='/new/author' element={<AuthorForm />} />
           <Route exact path='/update/author/:name' element={<AuthorForm />} />
+          <Route exact path='/update/book/:barcode' element={<BookForm />} />
+
         </Routes>
       </main>
     </Router>

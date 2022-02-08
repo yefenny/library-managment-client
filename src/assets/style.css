@@ -371,6 +371,7 @@ input {
   margin-right: 50px;
   background-color: #fbb32e;
 }
+
 button.add-button:hover {
   background: #edb949;
 }

@@ -32,6 +32,23 @@ const BookService = {
         return res.json();
       })
       .then((book) => book);
+  },updateBook(values) {
+    return fetch(`${config.API_ENDPOINT}catalog/book/update`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(values)
+    })
+      .then((res) => {
+        if (!res.ok) {
+          return res.json().then((res) => {
+            throw res;
+          });
+        }
+        return res.json();
+      })
+      .then((book) => book);
   },
   createOptions(array, name) {
     return array.map((val) => {

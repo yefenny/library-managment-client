@@ -16,7 +16,7 @@ function Subjects() {
     SubjectService.getAllSubject().then((res) => {
       setSubjectsState({ ...subjectsState, subjects: res });
     });
-  });
+  }, []);
   if (AccountService.getUserType() !== 'LIBRARIAN') {
     return (
       <div>
@@ -47,16 +47,18 @@ function Subjects() {
 
           <p>Explore all subject categories.</p>
         </header>
+        <div className='searchContainer'>
+          <button
+            className='addBook subject-list'
+            onClick={() => {
+              window.location = '/new/subject';
+            }}
+          >
+            {' '}
+            + Add subject
+          </button>
+        </div>
 
-        <button
-          className='addBook'
-          onClick={() => {
-            window.location = '/new/subject';
-          }}
-        >
-          {' '}
-          + Add subject
-        </button>
         <hr />
         <div className='list-item'>
           <ul>{subjects}</ul>
