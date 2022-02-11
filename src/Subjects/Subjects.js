@@ -10,8 +10,32 @@ function Subjects() {
     subjects: [],
     error: ''
   });
-  const [modalOpen, setModalOpen] = useState(false);
+  const [modalIsOpen, setModelIsOpen] = useState(false);
+  const [subjectToDelete, setSubjectToDelete] = useState('');
 
+  const setModalOpen = (val) => {
+    setModelIsOpen(val);
+  };
+
+  const deleteSubject = () => {
+    setModelIsOpen(false);
+
+    if (subjectToDelete) {
+      const toDelete = {
+        barcode: AccountService.getBarcode(),
+        number: AccountService.getCardNumber(),
+        subject: subjectToDelete
+      };
+      SubjectService.deleteSubject(toDelete)
+        .then((res) => {
+          console.log(res);
+          window.location.reload(true);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
   useEffect(() => {
     SubjectService.getAllSubject().then((res) => {
       setSubjectsState({ ...subjectsState, subjects: res });
@@ -27,16 +51,22 @@ function Subjects() {
     const subjects = subjectsState.subjects.map((val, i) => {
       return (
         <li key={i}>
-          <Link to='/update/subject'>{val.name}</Link>
-          {modalOpen && <Modal setOpenModal={setModalOpen} />}
+          <Link to=''>{val.name}</Link>
           <button
             className='delete-button'
             onClick={() => {
               setModalOpen(true);
+              setSubjectToDelete(val.name);
             }}
           >
             Remove
           </button>
+          <Modal
+            setModal={setModalOpen}
+            text={`Are you sure you want to delete ${val.name}`}
+            modalIsOpen={modalIsOpen}
+            deleteFunction={deleteSubject}
+          />
         </li>
       );
     });

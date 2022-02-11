@@ -5,7 +5,7 @@ import Modal from '../Modal/Modal';
 import AccountService from '../Services/AccountService';
 import AuthorService from '../Services/AuthorService';
 
-export default function AuthorList({ authors }) {
+export default function AuthorList({ authors, errorHandle }) {
   const [modalIsOpen, setModelIsOpen] = useState(false);
   const [authorToDelete, setAuthorToDelete] = useState('');
 
@@ -15,7 +15,6 @@ export default function AuthorList({ authors }) {
 
   const deleteLibray = () => {
     setModelIsOpen(false);
-
     if (authorToDelete) {
       const toDelete = {
         barcode: AccountService.getBarcode(),
@@ -28,7 +27,7 @@ export default function AuthorList({ authors }) {
           window.location.reload(true);
         })
         .catch((error) => {
-          console.log(error);
+          errorHandle(error.message.message);
         });
     }
   };
@@ -41,7 +40,7 @@ export default function AuthorList({ authors }) {
             <Link to={link} state={{ author: val }}>
               {val.name}
             </Link>
-            <Link to={`/update/author/${val.name}`}state={{ author: val }}>
+            <Link to={`/update/author/${val.name}`} state={{ author: val }}>
               <button
                 className='yellow-button'
                 onClick={() => {
@@ -58,6 +57,7 @@ export default function AuthorList({ authors }) {
                 onClick={() => {
                   setModalOpen(true);
                   setAuthorToDelete(val.name);
+                  errorHandle('');
                 }}
               >
                 Remove

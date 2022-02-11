@@ -266,6 +266,9 @@ input {
 .books-list-container a {
   text-decoration: none;
 }
+.lightblue-button {
+  background: #96c0e9;
+}
 
 /* .book {
   color: #558c46;
@@ -303,6 +306,8 @@ input {
 .books-buttons {
   margin-top: 30px;
   margin-left: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .view-item.view-book p {
@@ -535,9 +540,11 @@ button.add-button:hover {
 .blue-button {
   font-size: 22px;
   width: fit-content;
+  min-width: 200px;
   align-self: center;
   padding: 10px;
-  margin-top: 30px;
+  margin-top: 0;
+  margin-bottom: 10px;
   border-radius: 5px;
   background: #022234;
   color: #fefefe;

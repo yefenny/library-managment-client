@@ -25,11 +25,10 @@ export default class LibrariesList extends Component {
       };
       LibraryService.deleteLibrary(toDelete)
         .then((res) => {
-          console.log(res);
           window.location.reload(true);
         })
         .catch((error) => {
-          console.log(error);
+          this.props.setError(error.message.message);
         });
     }
   };
@@ -48,6 +47,7 @@ export default class LibrariesList extends Component {
                 onClick={() => {
                   this.setModalOpen(true);
                   this.setState({ libraryTodelete: val.name });
+                  this.props.setError('');
                 }}
               >
                 Remove

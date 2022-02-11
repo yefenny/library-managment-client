@@ -1,18 +1,26 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import BookList from '../BookList/BookList';
+import { MemberContext } from '../Context/MemberContext';
 import AccountService from '../Services/AccountService';
 import BookService from '../Services/BookService';
 
 function Books() {
   const [books, setBooks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const { memberCheckout } = useContext(MemberContext);
+  const { error, setError } = useState('');
 
   useEffect(() => {
     BookService.getBooks().then((res) => {
       setBooks(res);
     });
   }, []);
+
+  const setErrorValue = (values) => {
+    setError(values);
+  };
+
   if (!AccountService.getCardNumber() && !AccountService.getBarcode()) {
     window.location = 'login';
   } else {
@@ -65,8 +73,7 @@ function Books() {
           />
         </div>
         <div className='books-list-container'>
-          {<BookList books={dynamicSearch()} />}
-       
+          {<BookList books={dynamicSearch()} setError={setErrorValue} />}
         </div>
       </div>
     );

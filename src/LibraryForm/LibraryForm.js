@@ -42,7 +42,7 @@ export default class LibraryForm extends Component {
     const library = required;
     library.barcode = AccountService.getBarcode();
     library.number = AccountService.getCardNumber();
-    console.log(library);
+   
 
     LibraryService.createLibrary(library)
       .then((res) => {

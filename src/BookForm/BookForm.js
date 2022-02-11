@@ -26,7 +26,7 @@ function BookForm() {
     dateFormat(new Date(), 'yyyy-MM-dd')
   );
   const [price, setPrice] = useState(0);
-  const [referenceOnly, setReferenceOnly] = useState(true);
+  const [referenceOnly, setReferenceOnly] = useState(false);
   const [error, setError] = useState('');
   const [libraries, setLibraries] = useState([]);
   const [authors, setAuthors] = useState([]);
@@ -145,7 +145,7 @@ function BookForm() {
       newBook.bookBarcode = state.book.barcode;
       BookService.updateBook(newBook)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           window.location = '/books';
         })
         .catch((error) => {
@@ -154,7 +154,7 @@ function BookForm() {
     } else
       BookService.addBooks(newBook)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           window.location = '/books';
         })
         .catch((error) => {

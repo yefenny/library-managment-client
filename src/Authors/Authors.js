@@ -8,6 +8,7 @@ import AuthorList from '../AuthorsList/AuthorsList';
 function Authors() {
   const [authors, setAuthors] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [error, setError] = useState('');
   useEffect(() => {
     let isCancelled = false;
     AuthorService.getAuthors().then((res) => {
@@ -18,6 +19,9 @@ function Authors() {
       isCancelled = true;
     };
   }, [authors]);
+  const errorHandle = (value) => {
+    setError(value);
+  };
 
   if (AccountService.getUserType() !== 'LIBRARIAN') {
     <div>
@@ -60,8 +64,9 @@ function Authors() {
           />
         </div>
         <div className='list-item remove-border'>
+          <div className='error'>{error}</div>
           {/* <ul>{subjects}</ul> */}
-          <AuthorList authors={dynamicSearch()} />
+          <AuthorList authors={dynamicSearch()} errorHandle={errorHandle} />
         </div>
       </div>
     );

@@ -38,6 +38,10 @@ export default function Book() {
             </span>
           </div>
           <div>
+            <label>Publication Date: </label>
+            <span>{book.publicationDate}</span>
+          </div>
+          <div>
             <label>Language: </label>
             <span>{book.language}</span>
           </div>

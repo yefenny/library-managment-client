@@ -23,6 +23,9 @@ class Libraries extends Component {
       window.location = 'login';
     }
   }
+  setError = (value) => {
+    this.setState({ error: value });
+  };
   editSearchValue = (e) => {
     this.setState({ searchTerm: e.target.value });
   };
@@ -60,7 +63,11 @@ class Libraries extends Component {
           />
         </div>
         <div className='list-item remove-border'>
-          <LibrariesList libraries={this.dynamicSearch()} />
+        <div className='error'>{this.state.error}</div>
+          <LibrariesList
+            libraries={this.dynamicSearch()}
+            setError={this.setError}
+          />
         </div>
       </div>
     );

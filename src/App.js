@@ -15,8 +15,19 @@ import Authors from './Authors/Authors';
 import Author from './Author/Author';
 import AuthorForm from './AuthorForm/AuthorForm';
 import Book from './Book/Book';
+import { createContext, useMemo, useState } from 'react';
+import { MemberContext } from './Context/MemberContext';
 
 function App() {
+  // const memberContext = createContext({
+  //   memberCheckout: ['member 1', 'member 2'],
+  //   setMemberCheckout: () => {}
+  // });
+  const [memberCheckout, setMemberCheckout] = useState(['', '']);
+  const value = useMemo(
+    () => ({ memberCheckout, setMemberCheckout }),
+    [memberCheckout]
+  );
   const navBar = () => {
     if (AccountService.getCardNumber() === null) {
       return (
@@ -61,26 +72,29 @@ function App() {
         {navBar()}
       </header>
       <main className='App'>
-        <Routes>
-          <Route exact path='/'></Route>
-          <Route path='/signup' element={<SignUp />} />
-          <Route path='/welcome' element={<SignUpComplete />} />
-          <Route path='/login' element={<LogIn />} />
-          <Route path='/books' element={<Books />} />
-          <Route path='/libraries' element={<Libraries />} />
-          <Route exact path='/new/book' element={<BookForm />} />
-          <Route exact path='/new/subject' element={<SubjectForm />} />
-          <Route path='subjects' element={<Subjects />} />
-          <Route exact path='/new/library' element={<LibraryForm />} />
-          <Route path='/library/:name' element={<Library />} />
-          <Route path='authors' element={<Authors />} />
-          <Route path='/author/:name' element={<Author />} />
-          <Route path='/book/:barcode' element={<Book />} />
-          <Route exact path='/new/author' element={<AuthorForm />} />
-          <Route exact path='/update/author/:name' element={<AuthorForm />} />
-          <Route exact path='/update/book/:barcode' element={<BookForm />} />
+        <MemberContext.Provider value={value}>
+          <Routes>
+            <Route exact path='/'></Route>
+            <Route path='/signup' element={<SignUp />} />
+            <Route path='/libraries' element={<Libraries />} />
+            <Route exact path='/new/book' element={<BookForm />} />
+            <Route exact path='/new/subject' element={<SubjectForm />} />
+            <Route path='subjects' element={<Subjects />} />
+            <Route exact path='/new/library' element={<LibraryForm />} />
+            <Route path='/library/:name' element={<Library />} />
+            <Route path='authors' element={<Authors />} />
+            <Route path='/author/:name' element={<Author />} />
+            <Route path='/book/:barcode' element={<Book />} />
+            <Route exact path='/new/author' element={<AuthorForm />} />
+            <Route exact path='/update/author/:name' element={<AuthorForm />} />
+            <Route exact path='/update/book/:barcode' element={<BookForm />} />
+            <Route path='/welcome' element={<SignUpComplete />} />
 
-        </Routes>
+            <Route path='/login' element={<LogIn />} />
+
+            <Route path='/books' element={<Books />}></Route>
+          </Routes>
+        </MemberContext.Provider>
       </main>
     </Router>
   );
