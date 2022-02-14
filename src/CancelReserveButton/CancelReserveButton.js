@@ -21,7 +21,7 @@ export default function CancelReserveButton({ book, color, setError }) {
   return (
     <Link to=''>
       <button className={color} onClick={reserveBook}>
-        Cancel Reserve
+        Cancel reservation
       </button>{' '}
     </Link>
   );
