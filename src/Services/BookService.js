@@ -129,10 +129,72 @@ const BookService = {
       })
       .then((book) => book);
   },
+  reserveBook(values) {
+    return fetch(
+      `${config.API_ENDPOINT}account/member/reserve?book=${values.book}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(values)
+      }
+    )
+      .then((res) => {
+        if (!res.ok) {
+          return res.json().then((res) => {
+            throw res;
+          });
+        }
+        return res.json();
+      })
+      .then((book) => book);
+  },
+  cancelReserveBook(values) {
+    return fetch(
+      `${config.API_ENDPOINT}account/member/reserve/cancel?book=${values.book}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(values)
+      }
+    )
+      .then((res) => {
+        if (!res.ok) {
+          return res.json().then((res) => {
+            throw res;
+          });
+        }
+        return res.json();
+      })
+      .then((book) => book);
+  },
 
   getCheckoutBooks(values) {
     return fetch(
       `${config.API_ENDPOINT}account/member/checkout/books?barcode=${values.barcode}&card=${values.card}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    )
+      .then((res) => {
+        if (!res.ok) {
+          return res.json().then((res) => {
+            throw res;
+          });
+        }
+        return res.json();
+      })
+      .then((book) => book);
+  },
+  getReservedBooks(values) {
+    return fetch(
+      `${config.API_ENDPOINT}account/member/reserve/books?barcode=${values.barcode}&card=${values.card}`,
       {
         method: 'GET',
         headers: {

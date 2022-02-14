@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import AccountService from '../Services/AccountService';
 import BookService from '../Services/BookService';
 
-export default function BorrowButton({ book, color, setError }) {
+export default function BorrowButton({ book, color, setError, setAlert }) {
   const borrowBook = () => {
     const values = {
       barcode: AccountService.getBarcode(),
@@ -14,7 +14,7 @@ export default function BorrowButton({ book, color, setError }) {
         window.location.reload();
       })
       .catch((error) => {
-        setError(error);
+        window.alert(error.message.message);
       });
   };
   return (

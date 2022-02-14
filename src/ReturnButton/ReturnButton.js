@@ -2,21 +2,27 @@ import { Link } from 'react-router-dom';
 import AccountService from '../Services/AccountService';
 import BookService from '../Services/BookService';
 
-export default function ReturnButton({ book, color }) {
+export default function ReturnButton({
+  book,
+  color,
+  setAlertModalOpen,
+  setAlertText
+}) {
   const returnBook = () => {
     const values = {
       barcode: AccountService.getBarcode(),
       number: AccountService.getCardNumber(),
       book: book.barcode
     };
-    console.log(values);
     BookService.returnBook(values)
-      .then((res) => {
-        console.log(res);
+      .then(async (res) => {
+        window.alert(res.message);
+        window.location.reload();
       })
       .catch((error) => {
-        console.log(error);
+        window.alert(error.message.message);
       });
+    return;
   };
   return (
     <Link to=''>

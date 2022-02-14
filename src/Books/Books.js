@@ -9,7 +9,8 @@ function Books() {
   const [books, setBooks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const { memberCheckout } = useContext(MemberContext);
-  const { error, setError } = useState('');
+  const { error, setNewError } = useState('');
+  const { alert, setAlert } = useState('');
 
   useEffect(() => {
     BookService.getBooks().then((res) => {
@@ -18,7 +19,7 @@ function Books() {
   }, []);
 
   const setErrorValue = (values) => {
-    setError(values);
+    setNewError(values);
   };
 
   if (!AccountService.getCardNumber() && !AccountService.getBarcode()) {
@@ -52,15 +53,18 @@ function Books() {
 
         <div className='searchContainer'>
           {/* <label htmlFor='searchBy'>Search: </label> */}
-          <button
-            className='addBook'
-            onClick={() => {
-              window.location = '/new/book';
-            }}
-          >
-            {' '}
-            + Add book
-          </button>
+          {AccountService.getUserType === 'LIBRARIAN' && (
+            <button
+              className='addBook'
+              onClick={() => {
+                window.location = '/new/book';
+              }}
+            >
+              {' '}
+              + Add book
+            </button>
+          )}
+
           <input
             type='text'
             id='searchBy'
@@ -72,8 +76,16 @@ function Books() {
             placeholder='Search by title, author, subject category and publication date'
           />
         </div>
+        <div className='error'>{error}</div>
+        <div className='alert'>{alert}</div>
         <div className='books-list-container'>
-          {<BookList books={dynamicSearch()} setError={setErrorValue} />}
+          {
+            <BookList
+              books={dynamicSearch()}
+              setError={setErrorValue}
+              setAlert={setAlert}
+            />
+          }
         </div>
       </div>
     );

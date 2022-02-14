@@ -577,7 +577,9 @@ ul.white-list li a {
   margin-bottom: 30px;
   margin-top: 10px;
 }
-
+.alert {
+  color: #66C7ED;
+}
 @media only screen and (max-width: 960px) {
   .sign-up-form {
     font-size: 20px;
@@ -632,6 +634,7 @@ ul.white-list li a {
   .sign-up-complete h2 {
     font-size: 34px;
   }
+
 }
 @media only screen and (max-width: 515px) {
   header {

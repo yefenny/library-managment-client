@@ -7,11 +7,40 @@ import BookService from '../Services/BookService';
 import BorrowButton from '../BorrowButton/BorrowButton';
 import ReturnButton from '../ReturnButton/ReturnButton';
 import RenewButton from '../RenewButton/RenewButton';
+import AlertModal from '../AlertModal/AlertModal';
+import ReserveButton from '../ReserveButton/ReserveButton';
+import CancelReserveButton from '../CancelReserveButton/CancelReserveButton';
 
-export default function BookList({ books, setError }) {
+export default function BookList({ books, setError, setAlert }) {
   const [modalIsOpen, setModelIsOpen] = useState(false);
   const [bookTodelete, setBookToDelete] = useState('');
   const [isLibrarian, setIsLibrarian] = useState(false);
+  const [alertText, setAlertText] = useState('');
+  const [borrowedBooks, setBorrowedBooks] = useState([]);
+  const [reservedBooks, setReservedBooks] = useState([]);
+
+  useEffect(() => {
+    let isCancelled = false;
+    BookService.getCheckoutBooks({
+      barcode: AccountService.getBarcode(),
+      card: AccountService.getCardNumber()
+    }).then((res) => {
+      if (!isCancelled) {
+        setBorrowedBooks(res);
+      }
+    });
+
+    BookService.getReservedBooks({
+      barcode: AccountService.getBarcode(),
+      card: AccountService.getCardNumber()
+    }).then((res) => {
+      if (!isCancelled) setReservedBooks(res);
+    });
+
+    return () => {
+      isCancelled = true;
+    };
+  }, []);
 
   const setModalOpen = (val) => {
     setModelIsOpen(val);
@@ -36,19 +65,35 @@ export default function BookList({ books, setError }) {
         });
     }
   };
-  const bookIsBorrowed = async (book) => {
+  const bookIsBorrowed = (book) => {
     let borrowed = [];
+    let error;
+    var founded = [];
 
-    const founded = await BookService.getCheckoutBooks({
-      barcode: AccountService.getBarcode(),
-      card: AccountService.getCardNumber()
-    }).then((res) => {
-      borrowed = [...res];
-      const found = borrowed.find((val) => val.barcode === book.barcode);
-      return found ? true : false;
-    });
-    return founded;
+    if (borrowedBooks) {
+      founded = borrowedBooks.find((val) => val.barcode === book.barcode);
+      if (founded) return true;
+      else {
+        return false;
+      }
+    }
+    return false;
   };
+  const bookIsReserved = (book) => {
+    let borrowed = [];
+    let error;
+    var founded = [];
+
+    if (bookIsReserved) {
+      founded = reservedBooks.find((val) => val.barcode === book.barcode);
+      if (founded) return true;
+      else {
+        return false;
+      }
+    }
+    return false;
+  };
+
   const renderButtons = (val) => {
     if (AccountService.getUserType() === 'LIBRARIAN') {
       return (
@@ -84,6 +129,8 @@ export default function BookList({ books, setError }) {
         </>
       );
     } else if (AccountService.getUserType() === 'MEMBER') {
+      const isBorrowed = bookIsBorrowed(val);
+      const isReserved = bookIsReserved(val);
       return (
         <>
           {val.status === 'AVAILABLE' && (
@@ -91,13 +138,35 @@ export default function BookList({ books, setError }) {
               book={val}
               color={'blue-button'}
               setError={setError}
+              setAlert={setAlert}
             />
           )}
-          {val.status === 'LOANED' && bookIsBorrowed(val) && (
-            <ReturnButton book={val} color={'blue-button'} setError={setError} />
+          {val.status === 'LOANED' && isBorrowed && (
+            <ReturnButton
+              book={val}
+              color={'blue-button'}
+              setError={setError}
+              setAlertText={setAlertText}
+            />
           )}
-          {val.status === 'LOANED' && bookIsBorrowed(val) && (
-            <RenewButton book={val} color={'blue-button'} setError={setError}/>
+          {val.status === 'LOANED' && !isBorrowed && !isReserved && (
+            <ReserveButton
+              book={val}
+              color={'blue-button'}
+              setError={setError}
+              setAlertText={setAlertText}
+            />
+          )}
+          {val.status === 'LOANED' && !isBorrowed && isReserved && (
+            <CancelReserveButton
+              book={val}
+              color={'blue-button'}
+              setError={setError}
+              setAlertText={setAlertText}
+            />
+          )}
+          {val.status === 'LOANED' && isBorrowed && (
+            <RenewButton book={val} color={'blue-button'} setError={setError} />
           )}
           <Modal
             setModal={setModalOpen}
