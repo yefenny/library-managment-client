@@ -53,7 +53,7 @@ function Books() {
 
         <div className='searchContainer'>
           {/* <label htmlFor='searchBy'>Search: </label> */}
-          {AccountService.getUserType === 'LIBRARIAN' && (
+          {AccountService.getUserType() === 'LIBRARIAN' && (
             <button
               className='addBook'
               onClick={() => {

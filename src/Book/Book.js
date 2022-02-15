@@ -20,10 +20,12 @@ export default function Book() {
   useEffect(() => {
     let isCancelled = false;
     BookService.getBooks().then((res) => {
-      setBooks(res);
+      if (!isCancelled) setBooks(res);
     });
     if (books) {
-      let newBook = books.find((val) => val.barcode === barcode);
+      console.log(barcode);
+      let newBook = books.find((val) => val.barcode == barcode);
+      console.log(newBook);
       setBook(newBook);
     }
     BookService.getCheckoutBooks({
@@ -48,27 +50,19 @@ export default function Book() {
 
   const memberButtons = (val) => {
     if (AccountService.getUserType() === 'MEMBER') {
-      const isBorrowed = state.isBorrowed(val, borrowedBooks);
-      const isReserved = state.isReserved(val, reservedBooks)
+      const isBorrowed = BookService.bookIsBorrowed(val, borrowedBooks);
+      const isReserved = BookService.bookIsReserved(val, reservedBooks);
       return (
         <>
           {val.status === 'AVAILABLE' && state && (
-            <BorrowButton
-              book={val}
-              color={'blue-button'}
-              state={state}
-              path={path}
-            />
+            <BorrowButton book={val} color={'blue-button'} />
           )}
           {val.status === 'LOANED' && state && isBorrowed && (
             <ReturnButton book={val} color={'blue-button'} />
           )}
-          {val.status === 'LOANED' &&
-            state &&
-            !isBorrowed &&
-            !isReserved && (
-              <ReserveButton book={val} color={'blue-button'} />
-            )}
+          {val.status === 'LOANED' && state && !isBorrowed && !isReserved && (
+            <ReserveButton book={val} color={'blue-button'} />
+          )}
           {val.status === 'LOANED' &&
             state &&
             !state.isBorrowed &&
@@ -84,77 +78,82 @@ export default function Book() {
   };
 
   if (
-    (AccountService.getUserType() === 'LIBRARIAN' ||
-      AccountService.getUserType() === 'MEMBER') &&
-    book
+    AccountService.getUserType() === 'LIBRARIAN' ||
+    AccountService.getUserType() === 'MEMBER'
   ) {
     return (
       <div className='form-background'>
         <div className='view-item view-book'>
-          <h2>{book.title}</h2>
+          <h2>{book && book.title}</h2>
           <div>
             <label>Format: </label>
-            <span>{book.format}</span>
+            <span>{book && book.format}</span>
           </div>
           <div>
             <label>Author: </label>
-            <span>{book.author ? book.author.name : ''}</span>
+            <span>{book && (book.author ? book.author.name : '')}</span>
           </div>
           <div>
             <label>Publisher: </label>
-            <span>{book.publisher}</span>
+            <span>{book && book.publisher}</span>
           </div>
           <div>
             <label>Subjects: </label>
             <span>
-              {book.subjects
-                ? BookService.createSubjectsList(book.subjects)
-                : ''}
+              {book &&
+                (book.subjects
+                  ? BookService.createSubjectsList(book.subjects)
+                  : '')}
             </span>
           </div>
           <div>
             <label>Publication Date: </label>
-            <span>{book.publicationDate}</span>
+            <span>{book && book.publicationDate}</span>
           </div>
           <div>
             <label>Language: </label>
-            <span>{book.language}</span>
+            <span>{book && book.language}</span>
           </div>
           <div>
             <label>Number of pages: </label>
-            <span>{book.numberOfPages}</span>
+            <span>{book && book.numberOfPages}</span>
           </div>
           <div>
             <label>Price: </label>
-            <span>${book.price}</span>
+            <span> {book && book.price}</span>
           </div>
           <div>
             <label>Library: </label>
-            <span>{book.library ? book.library['name'] : ''}</span>
+            <span>{book && (book.library ? book.library['name'] : '')}</span>
             <div>
-              <span>{book.library ? book.library['streetAddress'] : ''}</span>
-              <p> {book.library ? book.library['city'] : ''}</p>
-              <p>{book.library ? book.library['zipcode'] : ''}</p>
-              <p>{book.library ? book.library['country'].toUpperCase() : ''}</p>
+              <span>
+                {book && (book.library ? book.library['streetAddress'] : '')}
+              </span>
+              <p> {book && (book.library ? book.library['city'] : '')}</p>
+              <p>{book && (book.library ? book.library['zipcode'] : '')}</p>
+              <p>
+                {book &&
+                  (book.library ? book.library['country'].toUpperCase() : '')}
+              </p>
             </div>
             <div>
               <label>ISBN: </label>
-              <span>{book.isbn}</span>
+              <span>{book && book.isbn}</span>
             </div>
             <div>
               {' '}
               <label>Rack number: </label>
-              <span>{book.rack ? book.rack['number'] : ''}</span>
+              <span>{book && (book.rack ? book.rack['number'] : '')}</span>
             </div>
             <div>
               {' '}
               <label>Rack location: </label>
-              <span>{book.rack ? book.rack['location'] : ''}</span>
+              <span>{book && (book.rack ? book.rack['location'] : '')}</span>
             </div>
           </div>
 
           {/* <p>{book.author.name}</p> */}
-          {memberButtons(book)}
+          {book && memberButtons(book)}
 
           <button
             className='blue-button'
