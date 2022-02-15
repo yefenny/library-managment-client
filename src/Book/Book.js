@@ -1,6 +1,6 @@
 import { Component, useState, useEffect } from 'react';
 import { withRouter } from 'react-router';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import BorrowButton from '../BorrowButton/BorrowButton';
 import CancelReserveButton from '../CancelReserveButton/CancelReserveButton';
 import RenewButton from '../RenewButton/RenewButton';
@@ -14,6 +14,7 @@ export default function Book() {
   const [books, setBooks] = useState([]);
   const [borrowedBooks, setBorrowedBooks] = useState([]);
   const [reservedBooks, setReservedBooks] = useState([]);
+  let navigate = useNavigate();
 
   const { barcode } = useParams();
 
@@ -166,7 +167,7 @@ export default function Book() {
           <button
             className='blue-button'
             onClick={() => {
-              window.location = '/books';
+              navigate(-1);
             }}
           >
             Go back

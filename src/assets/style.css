@@ -380,6 +380,12 @@ input {
 button.add-button:hover {
   background: #edb949;
 }
+
+.loan-list {
+  border-top: 1px solid white;
+  margin-left: 80px;
+  padding-left: 0;
+}
 .list-item {
   margin-left: 80px;
   margin-top: 20px;
@@ -578,7 +584,7 @@ ul.white-list li a {
   margin-top: 10px;
 }
 .alert {
-  color: #66C7ED;
+  color: #66c7ed;
 }
 @media only screen and (max-width: 960px) {
   .sign-up-form {
@@ -634,7 +640,6 @@ ul.white-list li a {
   .sign-up-complete h2 {
     font-size: 34px;
   }
-
 }
 @media only screen and (max-width: 515px) {
   header {

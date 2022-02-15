@@ -17,6 +17,7 @@ import AuthorForm from './AuthorForm/AuthorForm';
 import Book from './Book/Book';
 import { createContext, useMemo, useState } from 'react';
 import { MemberContext } from './Context/MemberContext';
+import Borrows from './Borrows/Borrows';
 
 function App() {
   // const memberContext = createContext({
@@ -53,6 +54,9 @@ function App() {
             AccountService.getUserType() === 'MEMBER') && (
             <Link to='/books'> Books</Link>
           )}
+          {AccountService.getUserType() === 'MEMBER' && (
+            <Link to='/loans'> Loans</Link>
+          )}
           <Link
             to=''
             onClick={() => {
@@ -74,7 +78,7 @@ function App() {
       <main className='App'>
         <MemberContext.Provider value={value}>
           <Routes>
-            <Route exact path='/'></Route>
+            <Route exact path='/' element={<Books />} />
             <Route path='/signup' element={<SignUp />} />
             <Route path='/libraries' element={<Libraries />} />
             <Route exact path='/new/book' element={<BookForm />} />
@@ -93,6 +97,7 @@ function App() {
             <Route path='/login' element={<LogIn />} />
 
             <Route path='/books' element={<Books />}></Route>
+            <Route path='/loans' element={<Borrows />}></Route>
           </Routes>
         </MemberContext.Provider>
       </main>
