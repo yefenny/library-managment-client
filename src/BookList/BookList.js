@@ -65,34 +65,6 @@ export default function BookList({ books, setError, setAlert }) {
         });
     }
   };
-  const bookIsBorrowed = (book) => {
-    let borrowed = [];
-    let error;
-    var founded = [];
-
-    if (borrowedBooks) {
-      founded = borrowedBooks.find((val) => val.barcode === book.barcode);
-      if (founded) return true;
-      else {
-        return false;
-      }
-    }
-    return false;
-  };
-  const bookIsReserved = (book) => {
-    let borrowed = [];
-    let error;
-    var founded = [];
-
-    if (bookIsReserved) {
-      founded = reservedBooks.find((val) => val.barcode === book.barcode);
-      if (founded) return true;
-      else {
-        return false;
-      }
-    }
-    return false;
-  };
 
   const renderButtons = (val) => {
     if (AccountService.getUserType() === 'LIBRARIAN') {
@@ -129,8 +101,8 @@ export default function BookList({ books, setError, setAlert }) {
         </>
       );
     } else if (AccountService.getUserType() === 'MEMBER') {
-      const isBorrowed = bookIsBorrowed(val);
-      const isReserved = bookIsReserved(val);
+      const isBorrowed = BookService.bookIsBorrowed(val, borrowedBooks);
+      const isReserved = BookService.bookIsReserved(val, reservedBooks);
       return (
         <>
           {val.status === 'AVAILABLE' && (
@@ -185,7 +157,9 @@ export default function BookList({ books, setError, setAlert }) {
         const link = `/book/${val.barcode}`;
         return (
           <div className='book-item' key={i}>
-            <Link to={link} state={{ book: val }}>
+            <Link
+              to={link}
+            >
               <div className='book'>
                 <div className='container'>
                   <div className='card'>

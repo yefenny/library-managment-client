@@ -1,8 +1,17 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AccountService from '../Services/AccountService';
 import BookService from '../Services/BookService';
 
-export default function BorrowButton({ book, color, setError, setAlert }) {
+export default function BorrowButton({
+  book,
+  color,
+  setError,
+  setAlert,
+  state,
+  path
+}) {
+  if (path) console.log(path);
+  let navigate = useNavigate();
   const borrowBook = () => {
     const values = {
       barcode: AccountService.getBarcode(),
@@ -11,7 +20,18 @@ export default function BorrowButton({ book, color, setError, setAlert }) {
     };
     BookService.borrowBook(values)
       .then((res) => {
-        window.location.reload();
+        if (path) {
+          state.book.status = 'LOANED'
+          navigate(`${path}`, {
+            state: {
+              book: state.book,
+              isBorrowed: state.bookIsBorrowed(state.book),
+              isReserved: state.bookIsReserved
+            }
+          });
+        } else {
+          window.location.reload();
+        }
       })
       .catch((error) => {
         window.alert(error.message.message);

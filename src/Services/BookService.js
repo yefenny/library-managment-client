@@ -212,6 +212,30 @@ const BookService = {
       })
       .then((book) => book);
   },
+  bookIsBorrowed(book, bookList) {
+    var founded = [];
+
+    if (bookList) {
+      founded = bookList.find((val) => val.barcode === book.barcode);
+      if (founded) return true;
+      else {
+        return false;
+      }
+    }
+    return false;
+  },
+  bookIsReserved(book, bookList) {
+    var founded = [];
+
+    if (bookList) {
+      founded = bookList.find((val) => val.barcode === book.barcode);
+      if (founded) return true;
+      else {
+        return false;
+      }
+    }
+    return false;
+  },
   createOptions(array, name) {
     return array.map((val) => {
       return (
