@@ -14,20 +14,19 @@ export default function Book() {
   const [books, setBooks] = useState([]);
   const [borrowedBooks, setBorrowedBooks] = useState([]);
   const [reservedBooks, setReservedBooks] = useState([]);
-  const state = useLocation().state;
-  const path = useLocation().pathname;
+
   const { barcode } = useParams();
+
   useEffect(() => {
     let isCancelled = false;
     BookService.getBooks().then((res) => {
-      if (!isCancelled) setBooks(res);
+      if (!isCancelled) {
+        setBooks(res);
+        let newBook = res.find((val) => val.barcode === Number(barcode));
+        setBook(newBook);
+      }
     });
-    if (books) {
-      console.log(barcode);
-      let newBook = books.find((val) => val.barcode == barcode);
-      console.log(newBook);
-      setBook(newBook);
-    }
+
     BookService.getCheckoutBooks({
       barcode: AccountService.getBarcode(),
       card: AccountService.getCardNumber()
@@ -36,13 +35,20 @@ export default function Book() {
         setBorrowedBooks(res);
       }
     });
-
-    BookService.getReservedBooks({
-      barcode: AccountService.getBarcode(),
-      card: AccountService.getCardNumber()
-    }).then((res) => {
-      if (!isCancelled) setReservedBooks(res);
-    });
+    if (!isCancelled)
+      BookService.getReservedBooks({
+        barcode: AccountService.getBarcode(),
+        card: AccountService.getCardNumber()
+      })
+        .then((res) => {
+          if (!isCancelled)
+            if (res) {
+              setReservedBooks(res);
+            }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     return () => {
       isCancelled = true;
     };
@@ -54,22 +60,19 @@ export default function Book() {
       const isReserved = BookService.bookIsReserved(val, reservedBooks);
       return (
         <>
-          {val.status === 'AVAILABLE' && state && (
+          {val.status === 'AVAILABLE' && (
             <BorrowButton book={val} color={'blue-button'} />
           )}
-          {val.status === 'LOANED' && state && isBorrowed && (
+          {val.status === 'LOANED' && isBorrowed && (
             <ReturnButton book={val} color={'blue-button'} />
           )}
-          {val.status === 'LOANED' && state && !isBorrowed && !isReserved && (
+          {val.status === 'LOANED' && !isBorrowed && !isReserved && (
             <ReserveButton book={val} color={'blue-button'} />
           )}
-          {val.status === 'LOANED' &&
-            state &&
-            !state.isBorrowed &&
-            state.isReserved && (
-              <CancelReserveButton book={val} color={'blue-button'} />
-            )}
-          {val.status === 'LOANED' && state && isBorrowed && (
+          {val.status === 'LOANED' && !isBorrowed && isReserved && (
+            <CancelReserveButton book={val} color={'blue-button'} />
+          )}
+          {val.status === 'LOANED' && isBorrowed && (
             <RenewButton book={val} color={'blue-button'} />
           )}
         </>

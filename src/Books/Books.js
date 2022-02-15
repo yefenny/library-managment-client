@@ -48,7 +48,7 @@ function Books() {
       <div className='books-container bg-books'>
         <header>
           <h2>Books</h2>
-          <p>Star enjoing your favorites books.</p>
+          <p>Star enjoing your favorite books.</p>
         </header>
 
         <div className='searchContainer'>
