@@ -69,8 +69,13 @@ export default function Book() {
           {val.status === 'LOANED' && !isBorrowed && !isReserved && (
             <ReserveButton book={val} color={'blue-button'} />
           )}
-          {val.status === 'LOANED' && !isBorrowed && isReserved && (
-            <CancelReserveButton book={val} color={'blue-button'} />
+          {(val.status === 'LOANED' || val.status === 'RESERVED') &&
+            !isBorrowed &&
+            isReserved && (
+              <CancelReserveButton book={val} color={'blue-button'} />
+            )}
+          {val.status === 'RESERVED' && isReserved && (
+            <BorrowButton book={val} color={'blue-button'} />
           )}
           {val.status === 'LOANED' && isBorrowed && (
             <RenewButton book={val} color={'blue-button'} />

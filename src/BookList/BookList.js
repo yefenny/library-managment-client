@@ -129,8 +129,21 @@ export default function BookList({ books, setError, setAlert }) {
               setAlertText={setAlertText}
             />
           )}
-          {val.status === 'LOANED' && !isBorrowed && isReserved && (
-            <CancelReserveButton
+          {(val.status === 'LOANED' || val.status === 'RESERVED') &&
+            !isBorrowed &&
+            isReserved && (
+              <CancelReserveButton
+                book={val}
+                color={'blue-button'}
+                setError={setError}
+                setAlertText={setAlertText}
+              />
+            )}
+          {val.status === 'RESERVED' && isReserved && (
+            <BorrowButton book={val} color={'blue-button'} />
+          )}
+          {val.status === 'RESERVED' && !isBorrowed && !isReserved && (
+            <ReserveButton
               book={val}
               color={'blue-button'}
               setError={setError}
@@ -157,9 +170,7 @@ export default function BookList({ books, setError, setAlert }) {
         const link = `/book/${val.barcode}`;
         return (
           <div className='book-item' key={i}>
-            <Link
-              to={link}
-            >
+            <Link to={link}>
               <div className='book'>
                 <div className='container'>
                   <div className='card'>
