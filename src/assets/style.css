@@ -529,7 +529,7 @@ button.add-button:hover {
   border-radius: 10px;
   text-align: center;
   font-size: 24px;
-  margin-top: 180px;
+  margin-top: 100px;
   min-width: 450px;
   justify-content: center;
   color: #022234;
@@ -684,6 +684,26 @@ ul.white-list li a {
   }
   .view-container {
     max-width: 300px;
+  }
+  .books-list-container {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    padding-left: 40px;
+  }
+  .card {
+    width: 150px;
+  }
+  .blue-button {
+    min-width: 100px;
+  }
+  .books-container header {
+    margin-left: 20px;
+  }
+  .searchContainer {
+    padding-left: 30px;
+  }
+  .loan-list {
+    margin-left: 30px;
+    padding-left: 5px;
   }
 }
 
