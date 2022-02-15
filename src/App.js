@@ -18,6 +18,7 @@ import Book from './Book/Book';
 import { createContext, useMemo, useState } from 'react';
 import { MemberContext } from './Context/MemberContext';
 import Borrows from './Borrows/Borrows';
+import Reservations from './Reservations/Reservations';
 
 function App() {
   // const memberContext = createContext({
@@ -56,6 +57,9 @@ function App() {
           )}
           {AccountService.getUserType() === 'MEMBER' && (
             <Link to='/loans'> Loans</Link>
+          )}
+          {AccountService.getUserType() === 'MEMBER' && (
+            <Link to='/reservations'> Reservations</Link>
           )}
           <Link
             to=''
@@ -98,6 +102,7 @@ function App() {
 
             <Route path='/books' element={<Books />}></Route>
             <Route path='/loans' element={<Borrows />}></Route>
+            <Route path='/reservations' element={<Reservations />}></Route>
           </Routes>
         </MemberContext.Provider>
       </main>
