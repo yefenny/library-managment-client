@@ -40,13 +40,13 @@ function BookForm() {
     LibraryService.getAllLibrary().then((res) => {
       if (!isCancelled) {
         setLibraries(res);
-        setLibrary(res[0].name);
+        if (!state) setLibrary(res[0].name);
       }
     });
     AuthorService.getAuthors().then((res) => {
       if (!isCancelled) {
         setAuthors(res);
-        setAuthor(res[0].name);
+        if (!state) setAuthor(res[0].name);
       }
     });
     SubjectService.getAllSubject().then((res) => {
@@ -61,7 +61,7 @@ function BookForm() {
       setPublisher(state.book.publisher);
       setLanguage(state.book.language);
       setNumberOfPages(state.book.numberOfPages);
-      setAuthor(state.book.author);
+      setAuthor(state.book.author.name);
       setFormat(state.book.format);
       setPublicationDate(state.book.publicationDate);
       setPrice(state.book.price);
@@ -284,6 +284,7 @@ function BookForm() {
             />
             <label htmlFor='libraryName'>Library:</label>
             <select
+              disabled={isUpdate}
               value={library}
               onChange={(e) => {
                 setLibrary(e.target.value);

@@ -602,6 +602,94 @@ ul.white-list li a {
     height: 30%;
   }
 }
+@media only screen and (max-width: 450px) {
+  header {
+    font-size: 18px;
+  }
+  .sign-up-container {
+    display: grid;
+    grid-template-columns: 1;
+    grid-template-rows: 500px 1000px;
+  }
+  .sign-up-form {
+    font-size: 20px;
+  }
+  .view-container {
+    max-width: 300px;
+  }
+  .books-list-container {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    padding-left: 40px;
+  }
+  .card {
+    width: 150px;
+  }
+  .blue-button {
+    min-width: 100px;
+  }
+  .books-container header {
+    margin-left: 20px;
+  }
+  .searchContainer {
+    padding-left: 30px;
+  }
+  .loan-list {
+    margin-left: 30px;
+    padding-left: 5px;
+  }
+  .list-item {
+    margin-left: 30px;
+  }
+  /* .list-item ul li button {
+    margin: 0px 10px;
+  } */
+}
+@media only screen and (max-width: 655px) {
+  .yellow-button {
+    min-width: 140px;
+  }
+  .delete-button {
+    min-width: 140px;
+  }
+  .list-item ul li button {
+    margin: 0px 10px;
+  }
+}
+@media only screen and (max-width: 515px) {
+  header {
+    font-size: 22px;
+  }
+  .sign-up-container {
+    display: grid;
+    grid-template-columns: 1;
+    grid-template-rows: 600px 1100px;
+  }
+  .sign-up-complete {
+    font-size: 22px;
+    width: 80%;
+    height: 30%;
+    padding: 5px 30px;
+  }
+  .sign-up-complete h2 {
+    font-size: 30px;
+  }
+  .view-item {
+    min-width: 300px;
+    font-size: 20px;
+  }
+  .view-item h2 {
+    font-size: 24px;
+  }
+  .blue-button {
+    font-size: 18px;
+  }
+  .yellow-button {
+    min-width: 100px;
+  }
+  .delete-button {
+    min-width: 100px;
+  }
+}
 
 @media only screen and (max-width: 706px) {
   .sign-up-container {
@@ -639,71 +727,6 @@ ul.white-list li a {
   }
   .sign-up-complete h2 {
     font-size: 34px;
-  }
-}
-@media only screen and (max-width: 515px) {
-  header {
-    font-size: 22px;
-  }
-  .sign-up-container {
-    display: grid;
-    grid-template-columns: 1;
-    grid-template-rows: 600px 1100px;
-  }
-  .sign-up-complete {
-    font-size: 22px;
-    width: 80%;
-    height: 30%;
-    padding: 5px 30px;
-  }
-  .sign-up-complete h2 {
-    font-size: 30px;
-  }
-  .view-item {
-    min-width: 300px;
-    font-size: 20px;
-  }
-  .view-item h2 {
-    font-size: 24px;
-  }
-  .blue-button {
-    font-size: 18px;
-  }
-}
-@media only screen and (max-width: 450px) {
-  header {
-    font-size: 18px;
-  }
-  .sign-up-container {
-    display: grid;
-    grid-template-columns: 1;
-    grid-template-rows: 500px 1000px;
-  }
-  .sign-up-form {
-    font-size: 20px;
-  }
-  .view-container {
-    max-width: 300px;
-  }
-  .books-list-container {
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    padding-left: 40px;
-  }
-  .card {
-    width: 150px;
-  }
-  .blue-button {
-    min-width: 100px;
-  }
-  .books-container header {
-    margin-left: 20px;
-  }
-  .searchContainer {
-    padding-left: 30px;
-  }
-  .loan-list {
-    margin-left: 30px;
-    padding-left: 5px;
   }
 }
 
